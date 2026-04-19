@@ -1,0 +1,63 @@
+{
+  "game": "bunny-kingdom",
+  "variants": [],
+  "year_published": 2017,
+  "date": "2026-01-30",
+  "player_count": 4,
+  "winners": [2],
+  "notes": "Per-round fief totals — Alex 18/24/28/32 (100); Bea 12/19/22/30 (83); Cam 20/26/34/42 (122); Dana 15/21/25/29 (90). Cam's three parchments were the 'pair of towers' (10 VP), 'longest road' (12 VP), and 'fief of 5+ cities' (18 VP).",
+  "players": [
+    {
+      "name": "Alex",
+      "identity": "red",
+      "end_state": {
+        "vp": 115,
+        "fiefs": 6,
+        "cities": 14,
+        "towers": 3,
+        "fief_vp": 100,
+        "parchment_vp": 15,
+        "golden_parchments": 2
+      }
+    },
+    {
+      "name": "Bea",
+      "identity": "blue",
+      "end_state": {
+        "vp": 91,
+        "fiefs": 7,
+        "cities": 11,
+        "towers": 2,
+        "fief_vp": 83,
+        "parchment_vp": 8,
+        "golden_parchments": 1
+      }
+    },
+    {
+      "name": "Cam",
+      "identity": "yellow",
+      "end_state": {
+        "vp": 162,
+        "fiefs": 5,
+        "cities": 18,
+        "towers": 4,
+        "fief_vp": 122,
+        "parchment_vp": 40,
+        "golden_parchments": 3
+      }
+    },
+    {
+      "name": "Dana",
+      "identity": "green",
+      "end_state": {
+        "vp": 108,
+        "fiefs": 8,
+        "cities": 12,
+        "towers": 2,
+        "fief_vp": 90,
+        "parchment_vp": 18,
+        "golden_parchments": 2
+      }
+    }
+  ]
+}
