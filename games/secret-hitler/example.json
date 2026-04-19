@@ -1,0 +1,89 @@
+{
+  "game": "secret-hitler",
+  "variants": [],
+  "year_published": 2016,
+  "date": "2026-01-17",
+  "player_count": 7,
+  "winners": [0, 1, 2],
+  "notes": "Fascists win — Bea (Hitler) was elected Chancellor on the 5th government after 3 fascist policies were already down. Alex (President) was the lone fascist who knew Hitler's identity; Eli was investigated early and correctly outed as a liberal, which kept heat off Bea. Dana was executed via the Execution power on fascist policy 4.",
+  "players": [
+    {
+      "name": "Alex",
+      "identity": "fascist",
+      "team": 2,
+      "end_state": {
+        "policies_liberal": 2,
+        "policies_fascist": 5,
+        "hitler_chancellor_win": true,
+        "hitler_assassinated": false
+      }
+    },
+    {
+      "name": "Bea",
+      "identity": "hitler",
+      "team": 2,
+      "end_state": {
+        "policies_liberal": 2,
+        "policies_fascist": 5,
+        "hitler_chancellor_win": true,
+        "hitler_assassinated": false
+      }
+    },
+    {
+      "name": "Cam",
+      "identity": "fascist",
+      "team": 2,
+      "end_state": {
+        "policies_liberal": 2,
+        "policies_fascist": 5,
+        "hitler_chancellor_win": true,
+        "hitler_assassinated": false
+      }
+    },
+    {
+      "name": "Dana",
+      "identity": "liberal",
+      "team": 1,
+      "eliminated": true,
+      "end_state": {
+        "policies_liberal": 2,
+        "policies_fascist": 5,
+        "hitler_chancellor_win": true,
+        "hitler_assassinated": false
+      }
+    },
+    {
+      "name": "Eli",
+      "identity": "liberal",
+      "team": 1,
+      "end_state": {
+        "policies_liberal": 2,
+        "policies_fascist": 5,
+        "hitler_chancellor_win": true,
+        "hitler_assassinated": false
+      }
+    },
+    {
+      "name": "Finn",
+      "identity": "liberal",
+      "team": 1,
+      "end_state": {
+        "policies_liberal": 2,
+        "policies_fascist": 5,
+        "hitler_chancellor_win": true,
+        "hitler_assassinated": false
+      }
+    },
+    {
+      "name": "Gus",
+      "identity": "liberal",
+      "team": 1,
+      "end_state": {
+        "policies_liberal": 2,
+        "policies_fascist": 5,
+        "hitler_chancellor_win": true,
+        "hitler_assassinated": false
+      }
+    }
+  ]
+}
