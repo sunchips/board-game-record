@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Board game session record (core)",
+  "description": "Cross-game fields. Validated against every record in addition to the base + variant schemas for the game.",
+  "type": "object",
+  "required": ["game", "date", "player_count", "winners", "players"],
+  "additionalProperties": false,
+  "properties": {
+    "game": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Lowercase hyphenated slug of the printed title, e.g. 'catan', 'the-king-is-dead'. Never carries a year — use year_published for that."
+    },
+    "variants": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+      },
+      "uniqueItems": true,
+      "default": [],
+      "description": "Zero or more expansion/edition slugs active in this session. Each must have a corresponding <slug>.schema.json in the game folder. The validator unions the base and listed variant schemas to get the allowed end_state keys."
+    },
+    "year_published": {
+      "type": "integer",
+      "description": "Original publication year of the game. Pure metadata when the title is unique; also the tiebreaker (and folder selector) when two games share a printed title."
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO 8601 calendar date (YYYY-MM-DD)."
+    },
+    "player_count": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of seated players. Must equal len(players)."
+    },
+    "winners": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 0 },
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Indices into players[] of the winner(s). Multiple entries = tie or team win."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free-form prose for details the structured fields don't capture."
+    },
+    "players": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/player" },
+      "description": "One entry per player, in seating order. Position in array = player index."
+    }
+  },
+  "$defs": {
+    "player": {
+      "type": "object",
+      "required": ["name", "end_state"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player's name/handle. Non-unique is fine; winners references by index."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Optional stable identifier for the player across sessions. Used for aggregations and stats over time."
+        },
+        "identity": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Colour / faction / civ / mat / role. Base + variant schemas may constrain via enum; the validator unions their enums."
+        },
+        "team": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Team number for team games. Teammates share the value."
+        },
+        "eliminated": {
+          "type": "boolean",
+          "description": "Whether the player was knocked out before the game ended. Omit for games without elimination."
+        },
+        "end_state": {
+          "type": "object",
+          "additionalProperties": { "type": ["integer", "boolean"] },
+          "description": "Map of everything the player holds at game end. Values are integers for counts, booleans for flags (e.g. longest_road). Keys and per-key types are constrained by the union of the base schema and any listed variant schemas."
+        }
+      }
+    }
+  }
+}
