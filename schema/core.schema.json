@@ -23,8 +23,6 @@
     },
     "year_published": {
       "type": "integer",
-      "minimum": 1800,
-      "maximum": 2100,
       "description": "Original publication year of the game. Pure metadata when the title is unique; also the tiebreaker (and folder selector) when two games share a printed title."
     },
     "date": {
