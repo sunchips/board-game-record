@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Coup — Base",
+  "properties": {
+    "players": {
+      "items": {
+        "properties": {
+          "end_state": {
+            "propertyNames": {
+              "enum": [
+                "coins",
+                "influences_remaining"
+              ]
+            },
+            "properties": {
+              "coins": { "type": "integer", "minimum": 0, "maximum": 12 },
+              "influences_remaining": { "type": "integer", "minimum": 0, "maximum": 2 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

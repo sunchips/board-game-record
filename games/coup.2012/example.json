@@ -1,0 +1,50 @@
+{
+  "game": "coup",
+  "variants": [],
+  "year_published": 2012,
+  "date": "2026-04-01",
+  "player_count": 5,
+  "winners": [3],
+  "notes": "Elimination order: Cam (turn 4, lost Assassin challenge vs Dana), Alex (turn 7, couped by Dana), Bea (turn 9, lost Contessa block vs Eli's assassin), Eli (turn 12, couped by Dana after Dana stockpiled to 9 coins on a questionable Duke claim).",
+  "players": [
+    {
+      "name": "Alex",
+      "eliminated": true,
+      "end_state": {
+        "coins": 0,
+        "influences_remaining": 0
+      }
+    },
+    {
+      "name": "Bea",
+      "eliminated": true,
+      "end_state": {
+        "coins": 3,
+        "influences_remaining": 0
+      }
+    },
+    {
+      "name": "Cam",
+      "eliminated": true,
+      "end_state": {
+        "coins": 2,
+        "influences_remaining": 0
+      }
+    },
+    {
+      "name": "Dana",
+      "end_state": {
+        "coins": 2,
+        "influences_remaining": 2
+      }
+    },
+    {
+      "name": "Eli",
+      "eliminated": true,
+      "end_state": {
+        "coins": 1,
+        "influences_remaining": 0
+      }
+    }
+  ]
+}
