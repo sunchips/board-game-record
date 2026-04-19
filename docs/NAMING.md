@@ -6,10 +6,10 @@ All JSON records and markdown files in this repo are **UTF-8**. Player names, no
 
 ## Slugs
 
-`game` and `variant` values are **ASCII-only, lowercase, hyphen-separated** slugs. The `game` slug may optionally carry a `.YYYY` year suffix to disambiguate distinct games sharing the same printed title (see [Disambiguation](#disambiguation)).
+`game` and `variants` entries are **ASCII-only, lowercase, hyphen-separated** slugs. Neither ever carries a year suffix — a game's publication year lives in the separate `year_published` field.
 
-- `game` pattern: `^[a-z0-9]+(-[a-z0-9]+)*(\.[0-9]{4})?$`
-- `variant` pattern: `^(?!\d{4}$)[a-z0-9]+(-[a-z0-9]+)*$` (no year suffix; cannot be four digits alone — keeps the `<game>.<variant>` split unambiguous)
+- `game` pattern: `^[a-z0-9]+(-[a-z0-9]+)*$`
+- `variants` item pattern: `^[a-z0-9]+(-[a-z0-9]+)*$`
 
 Slugs stay ASCII because they become filesystem paths, URLs, and grep-targets — portability beats representing the game's native title here. Capture the original title inside the game's `README.md` and `<slug>.md` rules summary instead.
 
@@ -49,29 +49,18 @@ Apply in order to the printed title:
 
 The mechanical rule (`.` always separates) is intentional — it avoids per-game judgment calls about how an acronym is pronounced.
 
-The six-step algorithm above produces the base slug from a printed title. If that slug collides with another game already in this repo, the `.YYYY` year suffix is applied as a separate post-step — see [Disambiguation](#disambiguation).
-
 ## Game identifier
 
-A record identifies its game with two fields:
+A record identifies its game with the `game` slug plus an optional `variants` list:
 
 ```json
 "game": "catan",
-"variant": "seafarers"
+"variants": ["seafarers"]
 ```
 
-`variant` defaults to `"base"` when the record is for the base game.
+`variants` defaults to `[]` when the record is for the base game. Multiple variants can be listed; order doesn't matter.
 
-The canonical display/filename form is:
-
-```
-<game>               # when variant == "base"
-<game>.<variant>     # when variant is an expansion slug
-```
-
-Examples: `catan`, `catan.seafarers`, `scythe.invaders-from-afar`, `everdell.pearlbrook`, `coup.1988`, `coup.1988.expansion-one`.
-
-Parsing the display form: the `game` field is the whole slug before the variant, which may include a `.YYYY` year suffix. The variant (when present) follows the last `.`. The split is unambiguous because the year suffix is always exactly four digits while the `variant` regex rejects four-digit-only values.
+`year_published` lives alongside as pure metadata, except when two games share a printed title — see [Disambiguation](#disambiguation).
 
 ## Disambiguation
 
@@ -81,19 +70,35 @@ Three real-world edge cases that need explicit resolution:
 
 Some titles are reused across unrelated games — e.g. **Coup** (1988, Milton Bradley) and **Coup** (2012, Rikki Tahta) are different games with the same English title.
 
-Rule: when two or more games share a printed title, **every** colliding game gets a `.YYYY` year suffix using its original publication year. No game keeps the bare slug. This keeps the treatment symmetric — neither "first recorded wins" nor "most popular wins" — and every existing slug stays stable if a third collision appears later.
+The `game` field stays as the bare slug (`coup`) in both records — slugs never carry years. Instead:
 
-- `coup.2012` — the Tahta game
-- `coup.1988` — the earlier Milton Bradley game
+1. Both records set `year_published` to their game's original publication year.
+2. At the filesystem, both games' folders take a `.YYYY` suffix (`games/coup.1988/` and `games/coup.2012/`) and the bare `games/coup/` folder does not exist. The folder name is a filesystem disambiguator, not a slug.
 
-The year suffix lives inside the `game` field itself:
+Records look like:
 
 ```json
-"game": "coup.2012",
-"variant": "base"
+{ "game": "coup", "year_published": 2012, "variants": [], ... }
+{ "game": "coup", "year_published": 1988, "variants": [], ... }
 ```
 
-Folder layout follows: `games/coup.2012/`, schema file `games/coup.2012/coup.2012.schema.json`, rules summary `games/coup.2012/coup.2012.md`. Variant files inside that folder use plain slugs (no year), e.g. `reformation.schema.json`.
+Folder layout:
+
+```
+games/coup.1988/
+├── coup.schema.json        # base
+├── coup.md
+└── <expansion>.schema.json
+
+games/coup.2012/
+├── coup.schema.json        # base
+├── coup.md
+└── reformation.schema.json
+```
+
+Note that the base schema inside each folder is still named `coup.schema.json` — the year only lives on the folder.
+
+The validator resolves the folder as follows: try `games/<game>/`; if that doesn't exist and `year_published` is set, try `games/<game>.<year_published>/`. If neither resolves, the record fails validation.
 
 Year is chosen over publisher or designer because it's objectively lookupable and stable over time (a game's publisher can change; its first publication year does not).
 
@@ -121,25 +126,24 @@ Same rules, tweaked wording, new art, updated components. E.g. _Catan 4th ed._ �
 
 The game is still sold as the same title, but scoring components, `end_state` keys, player-count bounds, or faction roster change. E.g. _Scythe Modular Board_, _Puerto Rico 2020 Anniversary_, _7 Wonders 2nd ed._
 
-- **Add a new variant file** in the existing game folder:
+- **Add a new variant schema** in the existing game folder, scoped to the delta only:
   ```
   games/puerto-rico/
-  ├── puerto-rico.schema.json   # original base
+  ├── puerto-rico.schema.json   # base
   ├── puerto-rico.md
-  ├── 2020.schema.json          # 2020 edition
+  ├── 2020.schema.json          # 2020 edition delta
   └── 2020.md
   ```
-- Records use `{ "game": "puerto-rico", "variant": "2020" }`.
+- Records list the edition in `variants`, e.g. `{ "game": "puerto-rico", "variants": ["2020"] }`.
 - Pick the most durable edition slug: a year (`2020`), a publisher tag (`anniversary`), or a rules-version name (`definitive`). Year is usually most stable.
-- Inside the schema file, the informational `"type"` field is `"edition"` (sibling of `"base"` and `"expansion"`). Purely documentation — the validator doesn't read it.
 
 ### 3. Standalone game that shares a brand
 
 Different box, different player counts, incompatible rules — really a separate game. E.g. _Codenames Duet_, _Pandemic Legacy: Season 1_, _Dune: Imperium_ (vs. older _Dune_).
 
 - **Its own top-level folder** with its own slug: `games/codenames-duet/`.
-- Records use `{ "game": "codenames-duet" }` (variant stays `"base"`).
-- If the printed title is identical to an existing game's title, add a `.YYYY` year suffix per [Disambiguation](#disambiguation).
+- Records use `{ "game": "codenames-duet" }` (empty `variants`).
+- If the printed title is identical to an existing game's title, set `year_published` per [Disambiguation](#identical-printed-titles-for-different-games).
 
 ### Promotion rubric
 
@@ -154,20 +158,28 @@ Promote to case 3 (separate game) when the box is sold as a distinct product wit
 
 ## Expansion stacking
 
-v1 supports exactly one variant per record — either `"base"` or a single expansion slug. Multi-expansion sessions are recorded against whichever single variant dominated (and the others noted in `notes`), or they go unrecorded until stacked-variant schemas are introduced on demand. The naming convention for those, when/if added:
+Variant schemas are **pure deltas** — each one describes only what it adds on top of the base. To record a session with multiple expansions active, list every one in `variants`:
 
+```json
+{
+  "game": "catan",
+  "variants": ["seafarers", "cities-and-knights"],
+  ...
+}
 ```
-<game>.<variant1>.<variant2>.schema.json
-```
+
+The validator loads `catan.schema.json`, `seafarers.schema.json`, and `cities-and-knights.schema.json` from the game folder and unions them: the combined `end_state` accepts keys from the base plus both expansions, `identity` enums are unioned, and `x-score-formula` multipliers are merged. If two schemas disagree on the type of a shared key or the multiplier of a shared formula entry, the validator errors and the conflict has to be resolved in the schemas.
+
+There are no pre-generated stacked schema files — the union happens at validation time.
 
 ## Folder layout
 
 ```
-games/<game>/
-├── README.md              # overview, list of variants
-├── <game>.schema.json     # base variant
-├── <game>.md              # base rules summary + rulebook link
-├── <variant>.schema.json  # expansion (zero or more)
+games/<game>/                 # or games/<game>.<year>/ on disambiguation
+├── README.md                 # overview, list of variants
+├── <game>.schema.json        # base ruleset
+├── <game>.md                 # base rules summary + rulebook link
+├── <variant>.schema.json     # expansion/edition delta (zero or more)
 └── <variant>.md
 ```
 

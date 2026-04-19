@@ -5,8 +5,9 @@ Usage:
     python tools/validate.py path/to/rec.json [more.json ...]
 
 Each input file is checked against schema/core.schema.json plus the
-variant schema resolved from its `game` and `variant` fields. Prints
-PASS or FAIL per file; exits 0 only if every input passes.
+game's base schema and every listed variant schema, merged into one
+composite. Prints PASS or FAIL per file; exits 0 only if every input
+passes.
 """
 
 from __future__ import annotations
@@ -29,14 +30,101 @@ def load_json(path: Path) -> dict:
         return json.load(f)
 
 
-def variant_schema_path(game: str, variant: str) -> Path:
-    filename = f"{game}.schema.json" if variant == "base" else f"{variant}.schema.json"
-    return GAMES_DIR / game / filename
-
-
 def format_error(record_path: Path, err: ValidationError) -> str:
     pointer = "/" + "/".join(str(p) for p in err.absolute_path)
     return f"  {record_path}:{pointer}: {err.message}"
+
+
+def resolve_game_dir(game: str, year: int | None) -> tuple[Path | None, str | None]:
+    """Return (game_dir, error_message). Exactly one is non-None."""
+    bare = GAMES_DIR / game
+    if bare.is_dir():
+        return bare, None
+    if year is not None:
+        tagged = GAMES_DIR / f"{game}.{year}"
+        if tagged.is_dir():
+            return tagged, None
+        return None, f"no folder at games/{game}/ or games/{game}.{year}/"
+    return None, (
+        f"no folder at games/{game}/; if this game shares a title with another, "
+        "set year_published to select the right edition"
+    )
+
+
+def variant_player_props(schema: dict) -> dict:
+    return (
+        schema.get("properties", {})
+        .get("players", {})
+        .get("items", {})
+        .get("properties", {})
+    )
+
+
+def merge_variant_schemas(schemas: list[tuple[str, dict]]) -> tuple[dict, list[str]]:
+    """Union end_state / identity / x-score-formula across base + listed variants."""
+    end_state_keys: set[str] = set()
+    end_state_props: dict[str, dict] = {}
+    end_state_props_owner: dict[str, str] = {}
+    identity_values: set[str] = set()
+    identity_constrained = False
+    x_formula: dict[str, int] = {}
+    x_formula_owner: dict[str, str] = {}
+    conflicts: list[str] = []
+
+    for label, schema in schemas:
+        pprops = variant_player_props(schema)
+
+        es = pprops.get("end_state", {})
+        for key in es.get("propertyNames", {}).get("enum", []):
+            end_state_keys.add(key)
+        for key, spec in es.get("properties", {}).items():
+            if key in end_state_props and end_state_props[key] != spec:
+                conflicts.append(
+                    f"end_state.{key}: incompatible definitions in "
+                    f"'{end_state_props_owner[key]}' and '{label}'"
+                )
+            else:
+                end_state_props[key] = spec
+                end_state_props_owner[key] = label
+
+        ident = pprops.get("identity", {})
+        if "enum" in ident:
+            identity_constrained = True
+            identity_values.update(ident["enum"])
+
+        formula = schema.get("x-score-formula", {})
+        for key, mult in formula.items():
+            if key in x_formula and x_formula[key] != mult:
+                conflicts.append(
+                    f"x-score-formula.{key}: {x_formula_owner[key]}={x_formula[key]} "
+                    f"vs {label}={mult}"
+                )
+            else:
+                x_formula[key] = mult
+                x_formula_owner[key] = label
+
+    player_props: dict = {
+        "end_state": {
+            "type": "object",
+            "propertyNames": {"enum": sorted(end_state_keys)},
+            "properties": end_state_props,
+            "additionalProperties": {"type": ["integer", "boolean"]},
+        }
+    }
+    if identity_constrained:
+        player_props["identity"] = {"enum": sorted(identity_values)}
+
+    merged = {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "type": "object",
+        "properties": {
+            "players": {
+                "type": "array",
+                "items": {"type": "object", "properties": player_props},
+            }
+        },
+    }
+    return merged, conflicts
 
 
 def validate_record(record_path: Path, core_schema: dict) -> list[str]:
@@ -57,32 +145,47 @@ def validate_record(record_path: Path, core_schema: dict) -> list[str]:
         return errors
 
     game = record.get("game")
-    variant = record.get("variant", "base")
-    if isinstance(game, str) and isinstance(variant, str):
-        variant_path = variant_schema_path(game, variant)
+    variants = record.get("variants", [])
+    year = record.get("year_published")
+    if not isinstance(game, str) or not isinstance(variants, list):
+        return errors
+
+    game_dir, dir_err = resolve_game_dir(game, year if isinstance(year, int) else None)
+    if game_dir is None:
+        errors.append(f"  {record_path}:/game: {dir_err}")
+    else:
         try:
-            variant_path.resolve().relative_to(GAMES_DIR.resolve())
+            game_dir.resolve().relative_to(GAMES_DIR.resolve())
         except ValueError:
-            errors.append(
-                f"  {record_path}:/game: slug resolves outside games/ directory"
-            )
-        else:
-            if variant_path.exists():
-                try:
-                    variant_schema = load_json(variant_path)
-                    variant_validator = Draft202012Validator(
-                        variant_schema, format_checker=FormatChecker()
-                    )
-                    errors.extend(
-                        format_error(record_path, e)
-                        for e in sorted(variant_validator.iter_errors(record), key=lambda e: e.path)
-                    )
-                except json.JSONDecodeError as e:
-                    errors.append(f"  {variant_path}: invalid JSON: {e}")
-            else:
+            errors.append(f"  {record_path}:/game: slug resolves outside games/ directory")
+            return errors
+
+        schema_paths: list[tuple[str, Path]] = [(game, game_dir / f"{game}.schema.json")]
+        for v in variants:
+            if isinstance(v, str):
+                schema_paths.append((v, game_dir / f"{v}.schema.json"))
+
+        loaded: list[tuple[str, dict]] = []
+        for label, path in schema_paths:
+            if not path.exists():
                 errors.append(
-                    f"  {record_path}: variant schema not found at {variant_path.relative_to(REPO_ROOT)}"
+                    f"  {record_path}: schema not found at {path.relative_to(REPO_ROOT)}"
                 )
+                continue
+            try:
+                loaded.append((label, load_json(path)))
+            except json.JSONDecodeError as e:
+                errors.append(f"  {path}: invalid JSON: {e}")
+
+        if loaded:
+            merged, conflicts = merge_variant_schemas(loaded)
+            for msg in conflicts:
+                errors.append(f"  {record_path}: schema conflict — {msg}")
+            merged_validator = Draft202012Validator(merged, format_checker=FormatChecker())
+            errors.extend(
+                format_error(record_path, e)
+                for e in sorted(merged_validator.iter_errors(record), key=lambda e: e.path)
+            )
 
     players = record.get("players")
     if isinstance(players, list):
