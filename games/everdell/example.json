@@ -1,0 +1,50 @@
+{
+  "game": "everdell",
+  "variants": [],
+  "year_published": 2018,
+  "date": "2026-03-07",
+  "player_count": 3,
+  "winners": [1],
+  "notes": "Bea's Husband/Wife pairing plus Architect (8 VP for resin+pebbles) carried her prosperity track. Cam claimed 3 of the 4 basic events but missed the Queen. Alex went tall on critters (King + Judge + Ranger).",
+  "players": [
+    {
+      "name": "Alex",
+      "end_state": {
+        "vp": 58,
+        "base_vp": 24,
+        "point_tokens": 8,
+        "event_vp": 9,
+        "journey_vp": 5,
+        "prosperity_vp": 12,
+        "constructions": 6,
+        "critters": 9
+      }
+    },
+    {
+      "name": "Bea",
+      "end_state": {
+        "vp": 71,
+        "base_vp": 26,
+        "point_tokens": 11,
+        "event_vp": 6,
+        "journey_vp": 4,
+        "prosperity_vp": 24,
+        "constructions": 8,
+        "critters": 7
+      }
+    },
+    {
+      "name": "Cam",
+      "end_state": {
+        "vp": 63,
+        "base_vp": 21,
+        "point_tokens": 7,
+        "event_vp": 15,
+        "journey_vp": 6,
+        "prosperity_vp": 14,
+        "constructions": 7,
+        "critters": 8
+      }
+    }
+  ]
+}
