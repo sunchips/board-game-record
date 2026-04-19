@@ -1,0 +1,29 @@
+{
+  "game": "jaipur",
+  "variants": [],
+  "year_published": 2009,
+  "date": "2026-02-14",
+  "player_count": 2,
+  "winners": [0],
+  "notes": "Best-of-three. Round 1: Alex 62 vs Bea 48 (Alex took the camel bonus). Round 2: Bea 55 vs Alex 41. Round 3: Alex 71 vs Bea 58 — Alex closed the match with a 5-diamond sale.",
+  "players": [
+    {
+      "name": "Alex",
+      "end_state": {
+        "seals": 2,
+        "total_rupees": 174,
+        "bonus_tokens": 7,
+        "camel_wins": 2
+      }
+    },
+    {
+      "name": "Bea",
+      "end_state": {
+        "seals": 1,
+        "total_rupees": 161,
+        "bonus_tokens": 6,
+        "camel_wins": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Jaipur — Base",
+  "properties": {
+    "players": {
+      "items": {
+        "properties": {
+          "end_state": {
+            "propertyNames": {
+              "enum": [
+                "seals",
+                "total_rupees",
+                "bonus_tokens",
+                "camel_wins"
+              ]
+            },
+            "properties": {
+              "seals": { "type": "integer", "minimum": 0, "maximum": 2 },
+              "total_rupees": { "type": "integer", "minimum": 0 },
+              "bonus_tokens": { "type": "integer", "minimum": 0 },
+              "camel_wins": { "type": "integer", "minimum": 0, "maximum": 3 }
+            }
+          }
+        }
+      }
+    }
+  }
+}
