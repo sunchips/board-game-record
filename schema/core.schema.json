@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://board-game-record/schema/core.schema.json",
+  "title": "Board game session record (core)",
+  "description": "Cross-game fields. Validated against every record in addition to the game's variant schema.",
+  "type": "object",
+  "required": ["game", "date", "player_count", "winners", "players"],
+  "additionalProperties": false,
+  "properties": {
+    "game": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Lowercase hyphenated game slug."
+    },
+    "variant": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "default": "base",
+      "description": "'base' or an expansion slug."
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO 8601 calendar date (YYYY-MM-DD)."
+    },
+    "player_count": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of seated players. Must equal len(players)."
+    },
+    "winners": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 0 },
+      "minItems": 1,
+      "uniqueItems": true,
+      "description": "Indices into players[] of the winner(s). Multiple entries = tie or team win."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Free-form prose for details the structured fields don't capture."
+    },
+    "players": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/player" },
+      "description": "One entry per player, in seating order. Position in array = player index."
+    }
+  },
+  "$defs": {
+    "player": {
+      "type": "object",
+      "required": ["name", "eliminated", "end_state"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Player's name/handle. Non-unique is fine; winners references by index."
+        },
+        "identity": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Colour / faction / civ / mat / role. Variant schemas may constrain via enum."
+        },
+        "team": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Team number for team games. Teammates share the value."
+        },
+        "eliminated": {
+          "type": "boolean",
+          "description": "Whether the player was knocked out before the game ended."
+        },
+        "end_state": {
+          "type": "object",
+          "additionalProperties": { "type": "integer" },
+          "description": "Map of everything the player holds at game end. Keys constrained per variant."
+        }
+      }
+    }
+  }
+}
