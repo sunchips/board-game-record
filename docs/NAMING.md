@@ -104,14 +104,52 @@ Step 3 of slugification says "transliterate to the common Latin title". To keep 
 
 Use the title **exactly as printed on the box/rulebook**. If the cover says `HeroQuest` as one word, the slug is `heroquest`. If it says `Hero Quest` as two words, the slug is `hero-quest`. Don't second-guess the publisher's spacing.
 
-## Standalone editions vs. expansions
+## Editions, expansions, and reprints
 
-- A variant that extends a base game → lives in the base game's folder as `<variant>.schema.json` + `<variant>.md`. Records use `{ "game": "<base>", "variant": "<variant>" }`.
-- A standalone edition that is its own game → lives in its own top-level folder. Records use `{ "game": "<edition-slug>" }` (variant stays `"base"`).
+A "new edition" can mean many things — a reprint with updated art, a rules revision, or a standalone game sharing a brand name. Each maps to one of three patterns.
 
-For example, Codenames Duet is standalone (different rules, different box, different player count), so it lives at `games/codenames-duet/` — not as a variant of `codenames`.
+### 1. Cosmetic reprint or minor rule clarification
 
-Minor revisions of the same base game (e.g. Catan 5e) do **not** get their own variant. Capture the difference in the base `<game>.md` and, for a specific session, in `record.notes`.
+Same rules, tweaked wording, new art, updated components. E.g. *Catan 4th ed.* → *5th ed.*, *Splendor* core-rules reprint.
+
+- No new schema, no new variant.
+- Document the delta in a short "Edition notes" section of the base `<game>.md`.
+- For a specific session under a specific edition, put the edition name in `record.notes`.
+
+### 2. Meaningfully different rules within the same brand
+
+The game is still sold as the same title, but scoring components, `end_state` keys, player-count bounds, or faction roster change. E.g. *Scythe Modular Board*, *Puerto Rico 2020 Anniversary*, *7 Wonders 2nd ed.*
+
+- **Add a new variant file** in the existing game folder:
+  ```
+  games/puerto-rico/
+  ├── puerto-rico.schema.json   # original base
+  ├── puerto-rico.md
+  ├── 2020.schema.json          # 2020 edition
+  └── 2020.md
+  ```
+- Records use `{ "game": "puerto-rico", "variant": "2020" }`.
+- Pick the most durable edition slug: a year (`2020`), a publisher tag (`anniversary`), or a rules-version name (`definitive`). Year is usually most stable.
+- Inside the schema file, the informational `"type"` field is `"edition"` (sibling of `"base"` and `"expansion"`). Purely documentation — the validator doesn't read it.
+
+### 3. Standalone game that shares a brand
+
+Different box, different player counts, incompatible rules — really a separate game. E.g. *Codenames Duet*, *Pandemic Legacy: Season 1*, *Dune: Imperium* (vs. older *Dune*).
+
+- **Its own top-level folder** with its own slug: `games/codenames-duet/`.
+- Records use `{ "game": "codenames-duet" }` (variant stays `"base"`).
+- If the printed title is identical to an existing game's title, add a `.YYYY` year suffix per [Disambiguation](#disambiguation).
+
+### Promotion rubric
+
+Default to case 1 (just prose). Promote to case 2 (a new variant) if **any** of these apply:
+
+1. `end_state` keys change (new scoring category added or removed).
+2. `x-score-formula` multipliers change.
+3. `player_count` bounds change.
+4. `identity` enum changes (factions/colours/roles added or removed).
+
+Promote to case 3 (separate game) when the box is sold as a distinct product with different core rules — typically when BGG lists it as its own game rather than an edition of the existing one.
 
 ## Expansion stacking
 
