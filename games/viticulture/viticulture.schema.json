@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Viticulture — Base (Essential Edition)",
+  "properties": {
+    "players": {
+      "items": {
+        "properties": {
+          "identity": {
+            "enum": ["green", "yellow", "red", "blue", "purple", "orange"]
+          },
+          "end_state": {
+            "propertyNames": {
+              "enum": [
+                "vp",
+                "lira",
+                "workers",
+                "residuals",
+                "structures",
+                "vine_cards",
+                "wine_tokens",
+                "orders_filled"
+              ]
+            },
+            "properties": {
+              "vp": { "type": "integer", "minimum": 0 },
+              "lira": { "type": "integer", "minimum": 0 },
+              "workers": { "type": "integer", "minimum": 3, "maximum": 7 },
+              "residuals": { "type": "integer", "minimum": 0, "maximum": 5 },
+              "structures": { "type": "integer", "minimum": 0, "maximum": 8 },
+              "vine_cards": { "type": "integer", "minimum": 0 },
+              "wine_tokens": { "type": "integer", "minimum": 0 },
+              "orders_filled": { "type": "integer", "minimum": 0 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

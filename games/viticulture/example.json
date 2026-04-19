@@ -1,0 +1,67 @@
+{
+  "game": "viticulture",
+  "variants": [],
+  "year_published": 2013,
+  "date": "2026-02-28",
+  "player_count": 4,
+  "winners": [0],
+  "notes": "Mamas & Papas — Alex: Rebecca/Raphael, Bea: Casey/Christian, Cam: Alaina/Alan, Dana: Nicoletta/Nicholas. Alex triggered game end at 21 VP in year 7 by filling a 5-cost order; final scoring after year completed. Tie between Bea and Dana broken by lira (Bea 8, Dana 5).",
+  "players": [
+    {
+      "name": "Alex",
+      "identity": "red",
+      "end_state": {
+        "vp": 23,
+        "lira": 4,
+        "workers": 6,
+        "residuals": 3,
+        "structures": 6,
+        "vine_cards": 4,
+        "wine_tokens": 2,
+        "orders_filled": 6
+      }
+    },
+    {
+      "name": "Bea",
+      "identity": "blue",
+      "end_state": {
+        "vp": 18,
+        "lira": 8,
+        "workers": 5,
+        "residuals": 4,
+        "structures": 5,
+        "vine_cards": 3,
+        "wine_tokens": 3,
+        "orders_filled": 4
+      }
+    },
+    {
+      "name": "Cam",
+      "identity": "yellow",
+      "end_state": {
+        "vp": 14,
+        "lira": 3,
+        "workers": 5,
+        "residuals": 2,
+        "structures": 4,
+        "vine_cards": 3,
+        "wine_tokens": 1,
+        "orders_filled": 3
+      }
+    },
+    {
+      "name": "Dana",
+      "identity": "green",
+      "end_state": {
+        "vp": 18,
+        "lira": 5,
+        "workers": 6,
+        "residuals": 3,
+        "structures": 7,
+        "vine_cards": 5,
+        "wine_tokens": 2,
+        "orders_filled": 4
+      }
+    }
+  ]
+}
