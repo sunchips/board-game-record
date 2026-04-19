@@ -29,11 +29,7 @@ The canonical display/filename form is:
 <game>.<variant>     # when variant is an expansion slug
 ```
 
-Examples: `catan`, `catan.seafarers`, `scythe.invaders-from-afar`, `everdell.pearlbrook`.
-
-### Why `.` rather than `+`
-
-`+` is not a legal character in Windows filenames, so using it in repository paths (or any filename a user might export) would break cross-platform usability. `.` works everywhere. Slugs themselves never contain `.`, so there's no ambiguity — the first `.` separates the game slug from the variant slug.
+Examples: `catan`, `catan.seafarers`, `scythe.invaders-from-afar`, `everdell.pearlbrook`. Since slugs can't contain `.` (the ASCII-slug rule above), the first `.` in a display name is always the variant separator.
 
 ## Standalone editions vs. expansions
 
