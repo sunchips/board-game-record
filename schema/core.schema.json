@@ -49,7 +49,7 @@
   "$defs": {
     "player": {
       "type": "object",
-      "required": ["name", "eliminated", "end_state"],
+      "required": ["name", "end_state"],
       "additionalProperties": false,
       "properties": {
         "name": {
@@ -69,7 +69,7 @@
         },
         "eliminated": {
           "type": "boolean",
-          "description": "Whether the player was knocked out before the game ended."
+          "description": "Whether the player was knocked out before the game ended. Omit for games without elimination."
         },
         "end_state": {
           "type": "object",

@@ -26,7 +26,7 @@ Both must pass. JSON Schema draft 2020-12.
 | `name` | string | yes | Player's name/handle. Non-unique is fine — `winners` references by index. |
 | `identity` | string | no | Single field covering colour / faction / civ / mat / hidden role — whatever the game uses to distinguish players. Variant schemas may constrain via `enum`. Examples: `"red"` (Catan), `"crimea"` (Scythe), `"liberal"` (Secret Hitler). |
 | `team` | int | no | Team number for team games (e.g. `1` / `2`). Teammates share the value. Omit for free-for-all. |
-| `eliminated` | bool | yes | Whether the player was knocked out before the game ended. |
+| `eliminated` | bool | no | Whether the player was knocked out before the game ended. Omit entirely for games without elimination (Catan, Codenames, etc.); only include when the game has an elimination mechanic (Coup, Risk). |
 | `end_state` | object | yes | Map of everything the player holds at game end: VP, coins, resources, cards, buildings, units, tiles, employees, territories, etc. Keys constrained per variant; values are integers. |
 
 There's no separate `score` field. A player's score — when the game has one — is either:
@@ -121,7 +121,6 @@ A Catan-style record, with scoring components only (no `vp` — derived from the
     {
       "name": "Alex",
       "identity": "red",
-      "eliminated": false,
       "end_state": {
         "settlements": 3, "cities": 1, "roads": 8,
         "longest_road": 0, "largest_army": 1, "dev_card_vp": 0
@@ -130,7 +129,6 @@ A Catan-style record, with scoring components only (no `vp` — derived from the
     {
       "name": "Bea",
       "identity": "blue",
-      "eliminated": false,
       "end_state": {
         "settlements": 2, "cities": 3, "roads": 12,
         "longest_road": 1, "largest_army": 0, "dev_card_vp": 0
@@ -139,7 +137,6 @@ A Catan-style record, with scoring components only (no `vp` — derived from the
     {
       "name": "Cam",
       "identity": "white",
-      "eliminated": false,
       "end_state": {
         "settlements": 4, "cities": 1, "roads": 7,
         "longest_road": 0, "largest_army": 0, "dev_card_vp": 1
