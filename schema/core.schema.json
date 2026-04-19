@@ -73,8 +73,8 @@
         },
         "end_state": {
           "type": "object",
-          "additionalProperties": { "type": "integer" },
-          "description": "Map of everything the player holds at game end. Keys constrained per variant."
+          "additionalProperties": { "type": ["integer", "boolean"] },
+          "description": "Map of everything the player holds at game end. Values are integers for counts, booleans for flags (e.g. longest_road). Keys and per-key types are constrained per variant."
         }
       }
     }

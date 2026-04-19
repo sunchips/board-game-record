@@ -41,7 +41,11 @@ def format_error(record_path: Path, err: ValidationError) -> str:
 
 
 def compute_score(end_state: dict, formula: dict) -> int:
-    return sum(end_state.get(k, 0) * m for k, m in formula.items())
+    total = 0
+    for key, multiplier in formula.items():
+        value = end_state.get(key, 0)
+        total += int(value) * multiplier
+    return total
 
 
 def validate_record(

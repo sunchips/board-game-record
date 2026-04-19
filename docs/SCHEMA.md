@@ -27,7 +27,7 @@ Both must pass. JSON Schema draft 2020-12.
 | `identity` | string | no | Single field covering colour / faction / civ / mat / hidden role — whatever the game uses to distinguish players. Variant schemas may constrain via `enum`. Examples: `"red"` (Catan), `"crimea"` (Scythe), `"liberal"` (Secret Hitler). |
 | `team` | int | no | Team number for team games (e.g. `1` / `2`). Teammates share the value. Omit for free-for-all. |
 | `eliminated` | bool | no | Whether the player was knocked out before the game ended. Omit entirely for games without elimination (Catan, Codenames, etc.); only include when the game has an elimination mechanic (Coup, Risk). |
-| `end_state` | object | yes | Map of everything the player holds at game end: VP, coins, resources, cards, buildings, units, tiles, employees, territories, etc. Keys constrained per variant; values are integers. |
+| `end_state` | object | yes | Map of everything the player holds at game end: VP, coins, resources, cards, buildings, units, tiles, employees, territories, etc. Keys constrained per variant. Values are integers for counts and booleans for flags (e.g. `longest_road: true`). |
 
 There's no separate `score` field. A player's score — when the game has one — is either:
 
@@ -72,8 +72,13 @@ A variant schema constrains `end_state` keys (and optionally `identity` values) 
               ]
             },
             "properties": {
-              "longest_road": { "enum": [0, 1] },
-              "largest_army": { "enum": [0, 1] }
+              "settlements":    { "type": "integer", "minimum": 0 },
+              "cities":         { "type": "integer", "minimum": 0 },
+              "roads":          { "type": "integer", "minimum": 0 },
+              "longest_road":   { "type": "boolean" },
+              "largest_army":   { "type": "boolean" },
+              "dev_card_vp":    { "type": "integer", "minimum": 0 },
+              "knights_played": { "type": "integer", "minimum": 0 }
             }
           }
         }
@@ -93,7 +98,7 @@ When a variant defines `x-score-formula`, a player's score is computed as:
 score = sum( end_state.get(key, 0) * multiplier for key, multiplier in formula.items() )
 ```
 
-The formula is a flat `{key: integer_multiplier}` map. Keys must appear in the variant's `end_state.propertyNames.enum`. Boolean-style components (e.g. `longest_road`, `largest_army`) use 0/1 values and let the multiplier carry the point value.
+The formula is a flat `{key: integer_multiplier}` map. Keys must appear in the variant's `end_state.propertyNames.enum`. Boolean-style components (e.g. `longest_road`, `largest_army`) are treated as `0` when `false` and `1` when `true`, so the multiplier carries the point value.
 
 When the formula is present:
 
@@ -123,7 +128,7 @@ A Catan-style record, with scoring components only (no `vp` — derived from the
       "identity": "red",
       "end_state": {
         "settlements": 3, "cities": 1, "roads": 8,
-        "longest_road": 0, "largest_army": 1, "dev_card_vp": 0
+        "longest_road": false, "largest_army": true, "dev_card_vp": 0
       }
     },
     {
@@ -131,7 +136,7 @@ A Catan-style record, with scoring components only (no `vp` — derived from the
       "identity": "blue",
       "end_state": {
         "settlements": 2, "cities": 3, "roads": 12,
-        "longest_road": 1, "largest_army": 0, "dev_card_vp": 0
+        "longest_road": true, "largest_army": false, "dev_card_vp": 0
       }
     },
     {
@@ -139,11 +144,11 @@ A Catan-style record, with scoring components only (no `vp` — derived from the
       "identity": "white",
       "end_state": {
         "settlements": 4, "cities": 1, "roads": 7,
-        "longest_road": 0, "largest_army": 0, "dev_card_vp": 1
+        "longest_road": false, "largest_army": false, "dev_card_vp": 1
       }
     }
   ]
 }
 ```
 
-Derived scores via the formula shown above: Alex = 3·1 + 1·2 + 0·2 + 1·2 + 0·1 = **7**; Bea = 2·1 + 3·2 + 1·2 + 0 + 0 = **10**; Cam = 4·1 + 1·2 + 0 + 0 + 1·1 = **7**. Bea is in `winners`. Matches.
+Derived scores via the formula shown above (booleans counted as 0/1): Alex = 3·1 + 1·2 + false·2 + true·2 + 0·1 = **7**; Bea = 2·1 + 3·2 + true·2 + false·2 + 0·1 = **10**; Cam = 4·1 + 1·2 + false·2 + false·2 + 1·1 = **7**. Bea is in `winners`. Matches.
