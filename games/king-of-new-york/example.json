@@ -1,0 +1,60 @@
+{
+  "game": "king-of-new-york",
+  "variants": [],
+  "year_published": 2014,
+  "date": "2026-03-14",
+  "player_count": 4,
+  "winners": [2],
+  "notes": "Bea was KO'd by Cam in round 7 after a triple-claw roll from Manhattan Midtown. Cam took the Superstar badge turn 9 and closed the game by hitting 20 Stars on turn 14.",
+  "players": [
+    {
+      "name": "Alex",
+      "identity": "drakonis",
+      "end_state": {
+        "vp": 14,
+        "hearts": 6,
+        "energy": 3,
+        "power_cards": 2,
+        "superstar": false,
+        "statue_of_liberty": false
+      }
+    },
+    {
+      "name": "Bea",
+      "identity": "meka-dragon",
+      "eliminated": true,
+      "end_state": {
+        "vp": 8,
+        "hearts": 0,
+        "energy": 0,
+        "power_cards": 1,
+        "superstar": false,
+        "statue_of_liberty": false
+      }
+    },
+    {
+      "name": "Cam",
+      "identity": "the-king",
+      "end_state": {
+        "vp": 20,
+        "hearts": 7,
+        "energy": 4,
+        "power_cards": 3,
+        "superstar": true,
+        "statue_of_liberty": true
+      }
+    },
+    {
+      "name": "Dana",
+      "identity": "kong",
+      "end_state": {
+        "vp": 11,
+        "hearts": 4,
+        "energy": 2,
+        "power_cards": 2,
+        "superstar": false,
+        "statue_of_liberty": false
+      }
+    }
+  ]
+}
