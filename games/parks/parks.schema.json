@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Parks — Base",
+  "properties": {
+    "players": {
+      "items": {
+        "properties": {
+          "identity": {
+            "enum": ["red", "blue", "green", "yellow", "orange"]
+          },
+          "end_state": {
+            "propertyNames": {
+              "enum": [
+                "vp",
+                "parks_visited",
+                "park_vp",
+                "photos",
+                "wildlife",
+                "year_bonus_vp",
+                "canteen",
+                "gear"
+              ]
+            },
+            "properties": {
+              "vp": { "type": "integer", "minimum": 0 },
+              "parks_visited": { "type": "integer", "minimum": 0 },
+              "park_vp": { "type": "integer", "minimum": 0 },
+              "photos": { "type": "integer", "minimum": 0 },
+              "wildlife": { "type": "integer", "minimum": 0 },
+              "year_bonus_vp": { "type": "integer", "minimum": 0 },
+              "canteen": { "type": "integer", "minimum": 0, "maximum": 3 },
+              "gear": { "type": "integer", "minimum": 0 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

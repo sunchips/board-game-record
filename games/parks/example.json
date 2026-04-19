@@ -1,0 +1,53 @@
+{
+  "game": "parks",
+  "variants": [],
+  "year_published": 2019,
+  "date": "2026-04-05",
+  "player_count": 3,
+  "winners": [0],
+  "notes": "Alex nailed Yosemite and Yellowstone in seasons 2 and 4 for the two biggest park cards. Cam focused on photos (the Canon camera gear halved photo costs). Leader cards: Alex — Ansel Adams (+1 VP per 2 photos), Bea — John Muir, Cam — Stephen Mather.",
+  "players": [
+    {
+      "name": "Alex",
+      "identity": "red",
+      "end_state": {
+        "vp": 52,
+        "parks_visited": 6,
+        "park_vp": 20,
+        "photos": 7,
+        "wildlife": 9,
+        "year_bonus_vp": 10,
+        "canteen": 2,
+        "gear": 1
+      }
+    },
+    {
+      "name": "Bea",
+      "identity": "blue",
+      "end_state": {
+        "vp": 41,
+        "parks_visited": 5,
+        "park_vp": 14,
+        "photos": 4,
+        "wildlife": 10,
+        "year_bonus_vp": 8,
+        "canteen": 3,
+        "gear": 2
+      }
+    },
+    {
+      "name": "Cam",
+      "identity": "green",
+      "end_state": {
+        "vp": 47,
+        "parks_visited": 7,
+        "park_vp": 18,
+        "photos": 12,
+        "wildlife": 5,
+        "year_bonus_vp": 6,
+        "canteen": 1,
+        "gear": 3
+      }
+    }
+  ]
+}
