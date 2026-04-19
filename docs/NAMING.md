@@ -6,10 +6,44 @@ All JSON records and markdown files in this repo are **UTF-8**. Player names, no
 
 ## Slugs
 
-- `game` and `variant` values are **ASCII-only, lowercase, hyphen-separated** slugs.
-- Only `a-z`, `0-9`, and `-` are allowed; no leading/trailing/consecutive hyphens.
-- Slugs stay ASCII because they become filesystem paths, URLs, and grep-targets — keeping them portable and searchable across platforms matters more than representing the game's native title here. Capture the native/original title inside the game's `README.md` and `<slug>.md` rules summary.
-- Examples: `catan`, `scythe`, `the-king-is-dead`, `king-of-new-york`, `cities-and-knights`. A Japanese game like *Machi Koro* uses the transliterated slug `machi-koro` — not `街コロ`.
+`game` and `variant` values are **ASCII-only, lowercase, hyphen-separated** slugs matching `^[a-z0-9]+(-[a-z0-9]+)*$`.
+
+Slugs stay ASCII because they become filesystem paths, URLs, and grep-targets — portability beats representing the game's native title here. Capture the original title inside the game's `README.md` and `<slug>.md` rules summary instead.
+
+### Slugification rules
+
+Apply in order to the printed title:
+
+1. **Replace `&` with ` and `** (spelled out).
+2. **Drop apostrophes** (don't turn them into hyphens): `It's` → `its`, not `it-s`.
+3. **Transliterate non-ASCII** to the common Latin title when one exists: `街コロ` → `machi-koro`.
+4. **Replace every other run of non-alphanumeric characters** (spaces, periods, colons, exclamation marks, slashes, dashes) with a single hyphen.
+5. **Lowercase everything.**
+6. **Collapse consecutive hyphens** and **trim** leading/trailing hyphens.
+
+### Examples covering the edge cases
+
+| Printed title | Slug | Why |
+|---|---|---|
+| Catan | `catan` | Trivial. |
+| The King Is Dead | `the-king-is-dead` | Spaces → hyphens. |
+| Cities & Knights | `cities-and-knights` | `&` spelled out. |
+| It's a Wonderful World | `its-a-wonderful-world` | Apostrophe dropped. |
+| Sushi Go! | `sushi-go` | `!` dropped. |
+| Clank! In! Space! | `clank-in-space` | Multiple `!` dropped. |
+| St. Petersburg | `st-petersburg` | `. ` collapses to one hyphen. |
+| Dr. Eureka | `dr-eureka` | Same. |
+| Codenames: Deep Undercover | `codenames-deep-undercover` | `: ` collapses to one hyphen. |
+| A Game of Thrones: The Board Game | `a-game-of-thrones-the-board-game` | Long title, same rules. |
+| Magic: The Gathering | `magic-the-gathering` | — |
+| 7 Wonders | `7-wonders` | Digits are fine. |
+| T.I.M.E Stories | `t-i-m-e-stories` | Each letter is its own token because `.` separates them — mechanical rule, no pronunciation guess. |
+| P.I. | `p-i` | Same. |
+| M.U.L.E. | `m-u-l-e` | Same — even though it's pronounced "mule", the dots make each letter a separate token. |
+| D&D | `d-and-d` | `&` → `-and-`. |
+| Machi Koro (街コロ) | `machi-koro` | Transliterate to common Latin title. |
+
+The mechanical rule (`.` always separates) is intentional — it avoids per-game judgment calls about how an acronym is pronounced.
 
 ## Game identifier
 
