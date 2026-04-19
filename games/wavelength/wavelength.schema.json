@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Wavelength — Base",
+  "properties": {
+    "players": {
+      "items": {
+        "properties": {
+          "end_state": {
+            "propertyNames": {
+              "enum": [
+                "team_score",
+                "bullseyes",
+                "rounds_psychic"
+              ]
+            },
+            "properties": {
+              "team_score": { "type": "integer", "minimum": 0, "maximum": 10 },
+              "bullseyes": { "type": "integer", "minimum": 0 },
+              "rounds_psychic": { "type": "integer", "minimum": 0 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

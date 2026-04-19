@@ -1,0 +1,65 @@
+{
+  "game": "wavelength",
+  "variants": [],
+  "year_published": 2019,
+  "date": "2026-03-28",
+  "player_count": 6,
+  "winners": [1, 3, 5],
+  "notes": "Left team closed on a bullseye when Bea gave the clue 'library silence' on the Quiet↔Loud spectrum. Cam's 'mildly spicy' clue earlier in the game was a disaster for Right team (0 points, and the bonus went to Left).",
+  "players": [
+    {
+      "name": "Alex",
+      "team": 2,
+      "end_state": {
+        "team_score": 7,
+        "bullseyes": 1,
+        "rounds_psychic": 2
+      }
+    },
+    {
+      "name": "Bea",
+      "team": 1,
+      "end_state": {
+        "team_score": 10,
+        "bullseyes": 3,
+        "rounds_psychic": 2
+      }
+    },
+    {
+      "name": "Cam",
+      "team": 2,
+      "end_state": {
+        "team_score": 7,
+        "bullseyes": 1,
+        "rounds_psychic": 2
+      }
+    },
+    {
+      "name": "Dana",
+      "team": 1,
+      "end_state": {
+        "team_score": 10,
+        "bullseyes": 3,
+        "rounds_psychic": 2
+      }
+    },
+    {
+      "name": "Eli",
+      "team": 2,
+      "end_state": {
+        "team_score": 7,
+        "bullseyes": 1,
+        "rounds_psychic": 2
+      }
+    },
+    {
+      "name": "Finn",
+      "team": 1,
+      "end_state": {
+        "team_score": 10,
+        "bullseyes": 3,
+        "rounds_psychic": 2
+      }
+    }
+  ]
+}
