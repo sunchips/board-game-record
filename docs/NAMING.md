@@ -1,10 +1,15 @@
 # Naming conventions
 
+## Encoding
+
+All JSON records and markdown files in this repo are **UTF-8**. Player names, notes, identity values, rules summaries — anything that's a free-form string — can use any Unicode script. A record with `"name": "たろう"` or `"notes": "近い勝負だった"` is fully supported.
+
 ## Slugs
 
-- `game` and `variant` values are **lowercase, hyphen-separated** slugs.
+- `game` and `variant` values are **ASCII-only, lowercase, hyphen-separated** slugs.
 - Only `a-z`, `0-9`, and `-` are allowed; no leading/trailing/consecutive hyphens.
-- Examples: `catan`, `scythe`, `the-king-is-dead`, `king-of-new-york`, `cities-and-knights`.
+- Slugs stay ASCII because they become filesystem paths, URLs, and grep-targets — keeping them portable and searchable across platforms matters more than representing the game's native title here. Capture the native/original title inside the game's `README.md` and `<slug>.md` rules summary.
+- Examples: `catan`, `scythe`, `the-king-is-dead`, `king-of-new-york`, `cities-and-knights`. A Japanese game like *Machi Koro* uses the transliterated slug `machi-koro` — not `街コロ`.
 
 ## Game identifier
 

@@ -26,7 +26,7 @@ SCORE_FORMULA_KEY = "x-score-formula"
 
 
 def load_json(path: Path) -> dict:
-    with path.open() as f:
+    with path.open(encoding="utf-8") as f:
         return json.load(f)
 
 

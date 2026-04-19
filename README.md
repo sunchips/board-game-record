@@ -1,6 +1,6 @@
 # board-game-record
 
-Stat tracking across board games. A session is recorded as a single JSON file capturing the **end-state** (final resources, VP/coins, assets, eliminations, winners). Records are validated against a shared core schema plus a per-game variant schema.
+Stat tracking across board games. A session is recorded as a single JSON file (UTF-8) capturing the **end-state** (final resources, VP/coins, assets, eliminations, winners). Records are validated against a shared core schema plus a per-game variant schema. Free-form fields — names, notes, identity — accept any Unicode; see [`docs/NAMING.md`](docs/NAMING.md) for the encoding policy.
 
 ## Layout
 
