@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Catan — Base",
+  "x-score-formula": {
+    "settlements": 1,
+    "cities": 2,
+    "longest_road": 2,
+    "largest_army": 2,
+    "dev_card_vp": 1
+  },
+  "properties": {
+    "players": {
+      "items": {
+        "properties": {
+          "identity": {
+            "enum": ["red", "blue", "white", "orange"]
+          },
+          "end_state": {
+            "propertyNames": {
+              "enum": [
+                "settlements",
+                "cities",
+                "roads",
+                "longest_road",
+                "largest_army",
+                "dev_card_vp",
+                "knights_played"
+              ]
+            },
+            "properties": {
+              "settlements": { "type": "integer", "minimum": 0 },
+              "cities": { "type": "integer", "minimum": 0 },
+              "roads": { "type": "integer", "minimum": 0 },
+              "longest_road": { "type": "boolean" },
+              "largest_army": { "type": "boolean" },
+              "dev_card_vp": { "type": "integer", "minimum": 0 },
+              "knights_played": { "type": "integer", "minimum": 0 }
+            }
+          }
+        }
+      }
+    }
+  }
+}

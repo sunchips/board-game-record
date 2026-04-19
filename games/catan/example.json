@@ -1,0 +1,63 @@
+{
+  "game": "catan",
+  "variants": [],
+  "year_published": 1995,
+  "date": "2026-04-12",
+  "player_count": 4,
+  "winners": [3],
+  "notes": "Dana revealed two hidden VP cards on turn 19 to jump from 8 to 10. Final scores: Alex 7, Bea 6, Cam 9, Dana 10.",
+  "players": [
+    {
+      "name": "Alex",
+      "identity": "red",
+      "end_state": {
+        "settlements": 3,
+        "cities": 1,
+        "roads": 9,
+        "longest_road": true,
+        "largest_army": false,
+        "dev_card_vp": 0,
+        "knights_played": 1
+      }
+    },
+    {
+      "name": "Bea",
+      "identity": "blue",
+      "end_state": {
+        "settlements": 4,
+        "cities": 1,
+        "roads": 7,
+        "longest_road": false,
+        "largest_army": false,
+        "dev_card_vp": 0,
+        "knights_played": 0
+      }
+    },
+    {
+      "name": "Cam",
+      "identity": "white",
+      "end_state": {
+        "settlements": 2,
+        "cities": 2,
+        "roads": 6,
+        "longest_road": false,
+        "largest_army": true,
+        "dev_card_vp": 1,
+        "knights_played": 4
+      }
+    },
+    {
+      "name": "Dana",
+      "identity": "orange",
+      "end_state": {
+        "settlements": 2,
+        "cities": 3,
+        "roads": 5,
+        "longest_road": false,
+        "largest_army": false,
+        "dev_card_vp": 2,
+        "knights_played": 2
+      }
+    }
+  ]
+}
