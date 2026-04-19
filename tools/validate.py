@@ -2,11 +2,11 @@
 """Validate board-game session records against core + variant JSON Schemas.
 
 Usage:
-    python tools/validate.py                         # validate every record in games/*/records/
-    python tools/validate.py path/to/rec.json ...    # validate specific files
-    python tools/validate.py --show-scores ...       # also print derived scores
+    python tools/validate.py path/to/rec.json [more.json ...]
+    python tools/validate.py --show-scores path/to/rec.json
 
-Exits non-zero if any record fails validation.
+Records live in a database, not in this repo — this tool exists to validate
+drafts before they are ingested. Exits non-zero if any record fails validation.
 """
 
 from __future__ import annotations
@@ -123,17 +123,9 @@ def print_derived_scores(record: dict, variant_schema: dict) -> None:
         print(f"    players[{i}] {name}: {score}")
 
 
-def discover_records() -> list[Path]:
-    if not GAMES_DIR.exists():
-        return []
-    return sorted(GAMES_DIR.glob("*/records/*.json"))
-
-
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument(
-        "paths", nargs="*", help="Record files to validate. Defaults to games/*/records/*.json."
-    )
+    parser.add_argument("paths", nargs="+", help="Record files to validate.")
     parser.add_argument(
         "--show-scores",
         action="store_true",
@@ -146,11 +138,7 @@ def main(argv: list[str]) -> int:
         return 2
     core_schema = load_json(CORE_SCHEMA_PATH)
 
-    records = [Path(a).resolve() for a in args.paths] if args.paths else discover_records()
-
-    if not records:
-        print("0 records validated (no records found under games/*/records/)")
-        return 0
+    records = [Path(a).resolve() for a in args.paths]
 
     failed = 0
     for rec in records:

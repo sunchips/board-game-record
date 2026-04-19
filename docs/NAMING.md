@@ -129,9 +129,7 @@ games/<game>/
 ├── <game>.schema.json     # base variant
 ├── <game>.md              # base rules summary + rulebook link
 ├── <variant>.schema.json  # expansion (zero or more)
-├── <variant>.md
-└── records/
-    └── YYYY-MM-DD-NNN.json
+└── <variant>.md
 ```
 
-Record filenames: `<date>-<sequence>.json`, where sequence is a zero-padded count of games played that day (`001`, `002`, …). The filename is cosmetic — the validator reads the JSON to determine game/variant.
+Session records live in a database, not under this repo — see the top-level [`README.md`](../README.md).

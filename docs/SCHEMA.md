@@ -1,6 +1,6 @@
 # Schema
 
-Every session record validates against two schemas:
+Session records are stored in a separate database — this repo defines the shape they must conform to. Every record validates against two schemas:
 
 1. **`schema/core.schema.json`** — cross-game fields (this document).
 2. **`games/<game>/<variant>.schema.json`** — constrains `end_state` keys (and optionally `identity` values) for that specific game/variant.

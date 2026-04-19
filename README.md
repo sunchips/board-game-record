@@ -1,6 +1,8 @@
 # board-game-record
 
-Stat tracking across board games. A session is recorded as a single JSON file (UTF-8) capturing the **end-state** (final resources, VP/coins, assets, eliminations, winners). Records are validated against a shared core schema plus a per-game variant schema. Free-form fields — names, notes, identity — accept any Unicode; see [`docs/NAMING.md`](docs/NAMING.md) for the encoding policy.
+Schema and rules catalog for recording board game end-states. This repo defines the **contract** — the JSON Schema each record conforms to, per-game variant schemas, and the rules-summary knowledge base — while session records themselves live in a **separate database**, not in this repo.
+
+A record captures the end-state of a session (final resources, VP/coins, assets, eliminations, winners) as JSON. Free-form fields (names, notes, identity) accept any Unicode; see [`docs/NAMING.md`](docs/NAMING.md) for the encoding policy.
 
 ## Layout
 
@@ -8,32 +10,35 @@ Stat tracking across board games. A session is recorded as a single JSON file (U
 schema/core.schema.json     # cross-game fields
 docs/SCHEMA.md              # field-by-field spec
 docs/NAMING.md              # game/variant naming conventions
-tools/validate.py           # validator
+tools/validate.py           # validator (authoring / CI)
 games/<game>/               # per-game folders (added one PR at a time)
-  <variant>.schema.json
-  <variant>.md              # rules summary + rulebook link
-  records/YYYY-MM-DD-NNN.json
+  README.md                 # overview, list of variants
+  <game>.schema.json        # base variant
+  <game>.md                 # rules summary + rulebook link
+  <variant>.schema.json     # expansion (zero or more)
+  <variant>.md
 ```
 
 No games are checked in yet — the spec lands first, then each game in its own PR.
 
 ## Recording a game
 
-1. Find the game's folder under `games/`. If it doesn't exist, the game isn't supported yet — open a PR that adds the schema + rules summary.
-2. Copy the example record from `games/<game>/records/` or from `docs/SCHEMA.md`.
-3. Fill in `game`, `variant` (default `base`), `date`, `player_count`, `players[]`, and `winners` (list of player indices).
-4. Put the file at `games/<game>/records/YYYY-MM-DD-NNN.json`.
-5. Run the validator.
+Records are stored in the database, not in this repo. The flow:
 
-## Validating
+1. Find the game's folder under `games/`. If it doesn't exist, the game isn't supported yet — open a PR that adds the schema + rules summary.
+2. Author a record that conforms to `schema/core.schema.json` plus the variant schema (see example in [`docs/SCHEMA.md`](docs/SCHEMA.md)).
+3. Run `tools/validate.py` on the draft record to catch issues before ingest.
+4. Submit it to the database. (Ingest tooling tracked separately — see open work.)
+
+## Validating a draft record
 
 ```bash
 pip install -r tools/requirements.txt
-python tools/validate.py                 # validate every record
-python tools/validate.py path/to/rec.json   # validate a single file
+python tools/validate.py path/to/draft.json [more.json ...]
+python tools/validate.py --show-scores path/to/draft.json
 ```
 
-Exit code is non-zero if any record fails; errors are printed with JSON Pointer paths.
+Exit code is non-zero if any record fails; errors are printed with JSON Pointer paths. `--show-scores` prints each player's derived VP using the variant's `x-score-formula`.
 
 ## Spec
 
