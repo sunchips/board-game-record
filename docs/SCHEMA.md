@@ -11,7 +11,7 @@ Both must pass. JSON Schema draft 2020-12.
 
 | Field | Type | Required | Captures |
 |---|---|---|---|
-| `game` | string | yes | Lowercase-hyphenated game slug, optionally with a `.YYYY` year suffix to disambiguate distinct games sharing a printed title. E.g. `catan`, `the-king-is-dead`, `coup`, `coup.1988`. |
+| `game` | string | yes | Lowercase-hyphenated game slug, optionally with a `.YYYY` year suffix to disambiguate distinct games sharing a printed title. E.g. `catan`, `the-king-is-dead`, `coup.2012`, `coup.1988`. |
 | `variant` | string | no (default `"base"`) | `"base"` or an expansion slug. Picks which variant schema validates the record. |
 | `date` | string (ISO date) | yes | Calendar date the session was played, `YYYY-MM-DD`. |
 | `player_count` | int | yes | Number of seated players. Must equal `len(players)`. |
@@ -41,6 +41,8 @@ Games without a score at all (Coup, Secret Hitler, Codenames) declare no formula
 
 - `player_count == len(players)`
 - Every entry in `winners` is a valid index: `0 <= w < len(players)`
+
+The core schema additionally enforces `winners` is non-empty and has no duplicate entries (`minItems: 1`, `uniqueItems: true`).
 
 ## Variant schemas
 

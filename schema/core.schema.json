@@ -1,6 +1,5 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://board-game-record/schema/core.schema.json",
   "title": "Board game session record (core)",
   "description": "Cross-game fields. Validated against every record in addition to the game's variant schema.",
   "type": "object",
@@ -14,9 +13,9 @@
     },
     "variant": {
       "type": "string",
-      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "pattern": "^(?!\\d{4}$)[a-z0-9]+(-[a-z0-9]+)*$",
       "default": "base",
-      "description": "'base' or an expansion slug. Variants cannot carry a year suffix."
+      "description": "'base' or an expansion slug. Variants cannot carry a year suffix and cannot be four digits alone — this keeps the <game>.<variant> split unambiguous against game slugs carrying a .YYYY suffix."
     },
     "date": {
       "type": "string",

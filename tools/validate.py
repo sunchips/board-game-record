@@ -53,26 +53,36 @@ def validate_record(record_path: Path, core_schema: dict) -> list[str]:
         for e in sorted(core_validator.iter_errors(record), key=lambda e: e.path)
     )
 
+    if not isinstance(record, dict):
+        return errors
+
     game = record.get("game")
     variant = record.get("variant", "base")
     if isinstance(game, str) and isinstance(variant, str):
         variant_path = variant_schema_path(game, variant)
-        if variant_path.exists():
-            try:
-                variant_schema = load_json(variant_path)
-                variant_validator = Draft202012Validator(
-                    variant_schema, format_checker=FormatChecker()
-                )
-                errors.extend(
-                    format_error(record_path, e)
-                    for e in sorted(variant_validator.iter_errors(record), key=lambda e: e.path)
-                )
-            except json.JSONDecodeError as e:
-                errors.append(f"  {variant_path}: invalid JSON: {e}")
-        else:
+        try:
+            variant_path.resolve().relative_to(GAMES_DIR.resolve())
+        except ValueError:
             errors.append(
-                f"  {record_path}: variant schema not found at {variant_path.relative_to(REPO_ROOT)}"
+                f"  {record_path}:/game: slug resolves outside games/ directory"
             )
+        else:
+            if variant_path.exists():
+                try:
+                    variant_schema = load_json(variant_path)
+                    variant_validator = Draft202012Validator(
+                        variant_schema, format_checker=FormatChecker()
+                    )
+                    errors.extend(
+                        format_error(record_path, e)
+                        for e in sorted(variant_validator.iter_errors(record), key=lambda e: e.path)
+                    )
+                except json.JSONDecodeError as e:
+                    errors.append(f"  {variant_path}: invalid JSON: {e}")
+            else:
+                errors.append(
+                    f"  {record_path}: variant schema not found at {variant_path.relative_to(REPO_ROOT)}"
+                )
 
     players = record.get("players")
     if isinstance(players, list):
