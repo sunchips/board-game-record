@@ -24,6 +24,7 @@ Both must pass. JSON Schema draft 2020-12.
 | Field | Type | Required | Captures |
 |---|---|---|---|
 | `name` | string | yes | Player's name/handle. Non-unique is fine — `winners` references by index. |
+| `email` | string (email) | no | Stable identifier for the player across sessions. Used for aggregations / stats over time (same person → same email, even if `name` varies). |
 | `identity` | string | no | Single field covering colour / faction / civ / mat / hidden role — whatever the game uses to distinguish players. Variant schemas may constrain via `enum`. Examples: `"red"` (Catan), `"crimea"` (Scythe), `"liberal"` (Secret Hitler). |
 | `team` | int | no | Team number for team games (e.g. `1` / `2`). Teammates share the value. Omit for free-for-all. |
 | `eliminated` | bool | no | Whether the player was knocked out before the game ended. Omit entirely for games without elimination (Catan, Codenames, etc.); only include when the game has an elimination mechanic (Coup, Risk). |

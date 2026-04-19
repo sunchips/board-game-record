@@ -57,6 +57,11 @@
           "minLength": 1,
           "description": "Player's name/handle. Non-unique is fine; winners references by index."
         },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Optional stable identifier for the player across sessions. Used for aggregations and stats over time."
+        },
         "identity": {
           "type": "string",
           "minLength": 1,
