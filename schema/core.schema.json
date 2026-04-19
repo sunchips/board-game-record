@@ -9,14 +9,14 @@
   "properties": {
     "game": {
       "type": "string",
-      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
-      "description": "Lowercase hyphenated game slug."
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*(\\.[0-9]{4})?$",
+      "description": "Lowercase hyphenated game slug, optionally ending with a '.YYYY' year suffix to disambiguate distinct games sharing the same printed title (e.g. 'coup', 'coup.1988')."
     },
     "variant": {
       "type": "string",
       "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
       "default": "base",
-      "description": "'base' or an expansion slug."
+      "description": "'base' or an expansion slug. Variants cannot carry a year suffix."
     },
     "date": {
       "type": "string",
