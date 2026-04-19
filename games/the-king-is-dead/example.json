@@ -1,0 +1,47 @@
+{
+  "game": "the-king-is-dead",
+  "variants": [],
+  "year_published": 2015,
+  "date": "2026-02-09",
+  "player_count": 3,
+  "winners": [1],
+  "notes": "Final region control — Welsh 4 (Gwynedd, Powys, Deheubarth, Strathclyde); Scots 2 (Alba, Moray); English 2 (Wessex, Mercia). Welsh wins the succession. Followers among Welsh: Bea 5, Alex 4, Cam 2 — Bea takes the throne. Supporter placement mattered: Bea's third supporter in Gwynedd gave the Welsh the late tiebreaker there.",
+  "players": [
+    {
+      "name": "Alex",
+      "end_state": {
+        "followers_welsh": 4,
+        "followers_scots": 6,
+        "followers_english": 3,
+        "supporters_placed": 3,
+        "regions_welsh": 4,
+        "regions_scots": 2,
+        "regions_english": 2
+      }
+    },
+    {
+      "name": "Bea",
+      "end_state": {
+        "followers_welsh": 5,
+        "followers_scots": 3,
+        "followers_english": 5,
+        "supporters_placed": 3,
+        "regions_welsh": 4,
+        "regions_scots": 2,
+        "regions_english": 2
+      }
+    },
+    {
+      "name": "Cam",
+      "end_state": {
+        "followers_welsh": 2,
+        "followers_scots": 5,
+        "followers_english": 6,
+        "supporters_placed": 2,
+        "regions_welsh": 4,
+        "regions_scots": 2,
+        "regions_english": 2
+      }
+    }
+  ]
+}

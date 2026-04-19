@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "The King Is Dead — Base",
+  "properties": {
+    "players": {
+      "items": {
+        "properties": {
+          "end_state": {
+            "propertyNames": {
+              "enum": [
+                "followers_welsh",
+                "followers_scots",
+                "followers_english",
+                "supporters_placed",
+                "regions_welsh",
+                "regions_scots",
+                "regions_english"
+              ]
+            },
+            "properties": {
+              "followers_welsh": { "type": "integer", "minimum": 0 },
+              "followers_scots": { "type": "integer", "minimum": 0 },
+              "followers_english": { "type": "integer", "minimum": 0 },
+              "supporters_placed": { "type": "integer", "minimum": 0, "maximum": 3 },
+              "regions_welsh": { "type": "integer", "minimum": 0, "maximum": 8 },
+              "regions_scots": { "type": "integer", "minimum": 0, "maximum": 8 },
+              "regions_english": { "type": "integer", "minimum": 0, "maximum": 8 }
+            }
+          }
+        }
+      }
+    }
+  }
+}
