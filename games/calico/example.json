@@ -1,0 +1,35 @@
+{
+  "game": "calico",
+  "variants": [],
+  "year_published": 2020,
+  "date": "2026-03-02",
+  "player_count": 3,
+  "winners": [2],
+  "notes": "Goal tiles: Alex — AA-BB, AA-BB-CC, AAAA-BB; Bea — AAAA-BB, AAA-BBB, AA-BB-CC; Cam — AA-BB, AAA-BBB, AAAA-BB. Cam hit two of three design goals fully and the third partially; also attracted Millie, Coconut, and Rumi. Bea missed the rainbow button by one colour.",
+  "players": [
+    {
+      "name": "Alex",
+      "end_state": {
+        "cats_vp": 14,
+        "buttons_vp": 12,
+        "design_goal_vp": 13
+      }
+    },
+    {
+      "name": "Bea",
+      "end_state": {
+        "cats_vp": 11,
+        "buttons_vp": 15,
+        "design_goal_vp": 10
+      }
+    },
+    {
+      "name": "Cam",
+      "end_state": {
+        "cats_vp": 19,
+        "buttons_vp": 12,
+        "design_goal_vp": 18
+      }
+    }
+  ]
+}
