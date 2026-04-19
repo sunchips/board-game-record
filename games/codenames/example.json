@@ -1,0 +1,71 @@
+{
+  "game": "codenames",
+  "variants": [],
+  "year_published": 2015,
+  "date": "2026-04-18",
+  "player_count": 6,
+  "winners": [3, 4, 5],
+  "notes": "Red started (9 agents). Bea's clue 'orchestra: 3' nailed PIANO, TRUMPET, and BAND in round 2. Blue was down to their last agent when Cam guessed NAIL on Alex's 'tool: 2' — but NAIL was the assassin. Blue wins by assassin, despite still having one agent to find.",
+  "players": [
+    {
+      "name": "Alex",
+      "identity": "spymaster",
+      "team": 1,
+      "end_state": {
+        "agents_remaining": 3,
+        "assassin_hit": true,
+        "starting_team": true
+      }
+    },
+    {
+      "name": "Bea",
+      "identity": "operative",
+      "team": 1,
+      "end_state": {
+        "agents_remaining": 3,
+        "assassin_hit": true,
+        "starting_team": true
+      }
+    },
+    {
+      "name": "Cam",
+      "identity": "operative",
+      "team": 1,
+      "end_state": {
+        "agents_remaining": 3,
+        "assassin_hit": true,
+        "starting_team": true
+      }
+    },
+    {
+      "name": "Dana",
+      "identity": "spymaster",
+      "team": 2,
+      "end_state": {
+        "agents_remaining": 1,
+        "assassin_hit": false,
+        "starting_team": false
+      }
+    },
+    {
+      "name": "Eli",
+      "identity": "operative",
+      "team": 2,
+      "end_state": {
+        "agents_remaining": 1,
+        "assassin_hit": false,
+        "starting_team": false
+      }
+    },
+    {
+      "name": "Finn",
+      "identity": "operative",
+      "team": 2,
+      "end_state": {
+        "agents_remaining": 1,
+        "assassin_hit": false,
+        "starting_team": false
+      }
+    }
+  ]
+}

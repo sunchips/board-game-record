@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Codenames — Base",
+  "properties": {
+    "players": {
+      "items": {
+        "properties": {
+          "identity": {
+            "enum": ["spymaster", "operative"]
+          },
+          "end_state": {
+            "propertyNames": {
+              "enum": [
+                "agents_remaining",
+                "assassin_hit",
+                "starting_team"
+              ]
+            },
+            "properties": {
+              "agents_remaining": { "type": "integer", "minimum": 0, "maximum": 9 },
+              "assassin_hit": { "type": "boolean" },
+              "starting_team": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    }
+  }
+}
