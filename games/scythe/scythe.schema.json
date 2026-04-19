@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Scythe — Base",
+  "properties": {
+    "players": {
+      "items": {
+        "properties": {
+          "identity": {
+            "enum": ["saxony", "nordic", "crimea", "rusviet", "polania"]
+          },
+          "end_state": {
+            "propertyNames": {
+              "enum": [
+                "coins",
+                "stars",
+                "popularity",
+                "power",
+                "territories",
+                "resources",
+                "workers",
+                "mechs",
+                "structures",
+                "recruits",
+                "upgrades",
+                "objectives_completed",
+                "factory_card"
+              ]
+            },
+            "properties": {
+              "coins": { "type": "integer", "minimum": 0 },
+              "stars": { "type": "integer", "minimum": 0, "maximum": 6 },
+              "popularity": { "type": "integer", "minimum": 0, "maximum": 18 },
+              "power": { "type": "integer", "minimum": 0, "maximum": 16 },
+              "territories": { "type": "integer", "minimum": 0 },
+              "resources": { "type": "integer", "minimum": 0 },
+              "workers": { "type": "integer", "minimum": 2, "maximum": 8 },
+              "mechs": { "type": "integer", "minimum": 0, "maximum": 4 },
+              "structures": { "type": "integer", "minimum": 0, "maximum": 4 },
+              "recruits": { "type": "integer", "minimum": 0, "maximum": 4 },
+              "upgrades": { "type": "integer", "minimum": 0, "maximum": 6 },
+              "objectives_completed": { "type": "integer", "minimum": 0, "maximum": 2 },
+              "factory_card": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

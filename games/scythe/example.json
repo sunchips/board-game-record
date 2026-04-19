@@ -1,0 +1,87 @@
+{
+  "game": "scythe",
+  "variants": [],
+  "year_published": 2016,
+  "date": "2026-03-21",
+  "player_count": 4,
+  "winners": [0],
+  "notes": "Mats — Alex: industrial, Bea: engineering, Cam: mechanical, Dana: patriotic. Alex triggered game end with the 6th star (combat win). Final coins: Alex 78, Dana 70, Bea 65, Cam 52.",
+  "players": [
+    {
+      "name": "Alex",
+      "identity": "saxony",
+      "end_state": {
+        "coins": 78,
+        "stars": 6,
+        "popularity": 12,
+        "power": 8,
+        "territories": 7,
+        "resources": 8,
+        "workers": 6,
+        "mechs": 4,
+        "structures": 4,
+        "recruits": 3,
+        "upgrades": 4,
+        "objectives_completed": 1,
+        "factory_card": false
+      }
+    },
+    {
+      "name": "Bea",
+      "identity": "nordic",
+      "end_state": {
+        "coins": 65,
+        "stars": 4,
+        "popularity": 15,
+        "power": 10,
+        "territories": 9,
+        "resources": 6,
+        "workers": 7,
+        "mechs": 3,
+        "structures": 3,
+        "recruits": 2,
+        "upgrades": 3,
+        "objectives_completed": 0,
+        "factory_card": true
+      }
+    },
+    {
+      "name": "Cam",
+      "identity": "crimea",
+      "end_state": {
+        "coins": 52,
+        "stars": 3,
+        "popularity": 8,
+        "power": 12,
+        "territories": 6,
+        "resources": 4,
+        "workers": 5,
+        "mechs": 4,
+        "structures": 2,
+        "recruits": 2,
+        "upgrades": 2,
+        "objectives_completed": 0,
+        "factory_card": false
+      }
+    },
+    {
+      "name": "Dana",
+      "identity": "polania",
+      "end_state": {
+        "coins": 70,
+        "stars": 4,
+        "popularity": 14,
+        "power": 6,
+        "territories": 8,
+        "resources": 5,
+        "workers": 6,
+        "mechs": 3,
+        "structures": 3,
+        "recruits": 4,
+        "upgrades": 5,
+        "objectives_completed": 1,
+        "factory_card": false
+      }
+    }
+  ]
+}
