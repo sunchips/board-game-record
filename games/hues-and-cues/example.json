@@ -1,0 +1,51 @@
+{
+  "game": "hues-and-cues",
+  "variants": [],
+  "year_published": 2020,
+  "date": "2026-04-11",
+  "player_count": 5,
+  "winners": [0],
+  "notes": "Played to the 30-VP finish. Alex closed it with a cue-giver bullseye on 'lobster shell' → 'crustacean sunset'. Biggest miss: Dana's 'mallard head' for a slate blue pulled every guess two rows high.",
+  "players": [
+    {
+      "name": "Alex",
+      "end_state": {
+        "vp": 31,
+        "cues_given": 4,
+        "bullseyes": 3
+      }
+    },
+    {
+      "name": "Bea",
+      "end_state": {
+        "vp": 24,
+        "cues_given": 4,
+        "bullseyes": 1
+      }
+    },
+    {
+      "name": "Cam",
+      "end_state": {
+        "vp": 22,
+        "cues_given": 4,
+        "bullseyes": 1
+      }
+    },
+    {
+      "name": "Dana",
+      "end_state": {
+        "vp": 17,
+        "cues_given": 4,
+        "bullseyes": 0
+      }
+    },
+    {
+      "name": "Eli",
+      "end_state": {
+        "vp": 26,
+        "cues_given": 4,
+        "bullseyes": 2
+      }
+    }
+  ]
+}

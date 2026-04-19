@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hues and Cues — Base",
+  "properties": {
+    "players": {
+      "items": {
+        "properties": {
+          "end_state": {
+            "propertyNames": {
+              "enum": [
+                "vp",
+                "cues_given",
+                "bullseyes"
+              ]
+            },
+            "properties": {
+              "vp": { "type": "integer", "minimum": 0 },
+              "cues_given": { "type": "integer", "minimum": 0 },
+              "bullseyes": { "type": "integer", "minimum": 0 }
+            }
+          }
+        }
+      }
+    }
+  }
+}
