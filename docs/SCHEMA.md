@@ -9,26 +9,26 @@ Both must pass. JSON Schema draft 2020-12.
 
 ## Core fields
 
-| Field | Type | Required | Captures |
-|---|---|---|---|
-| `game` | string | yes | Lowercase-hyphenated game slug, optionally with a `.YYYY` year suffix to disambiguate distinct games sharing a printed title. E.g. `catan`, `the-king-is-dead`, `coup.2012`, `coup.1988`. |
-| `variant` | string | no (default `"base"`) | `"base"` or an expansion slug. Picks which variant schema validates the record. |
-| `date` | string (ISO date) | yes | Calendar date the session was played, `YYYY-MM-DD`. |
-| `player_count` | int | yes | Number of seated players. Must equal `len(players)`. |
-| `winners` | int[] | yes | 0-based indices into `players[]`. One entry = solo win; multiple = tie or team win (list every teammate who shared the win). |
-| `notes` | string | no | Free-form prose for anything the structured fields don't capture — elimination order, score breakdowns, house rules, what broke a tie, best-of-N round tallies, memorable moments. |
-| `players` | array | yes | One entry per player, in seating order. Position in array = player index. |
+| Field          | Type              | Required              | Captures                                                                                                                                                                                  |
+| -------------- | ----------------- | --------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `game`         | string            | yes                   | Lowercase-hyphenated game slug, optionally with a `.YYYY` year suffix to disambiguate distinct games sharing a printed title. E.g. `catan`, `the-king-is-dead`, `coup.2012`, `coup.1988`. |
+| `variant`      | string            | no (default `"base"`) | `"base"` or an expansion slug. Picks which variant schema validates the record.                                                                                                           |
+| `date`         | string (ISO date) | yes                   | Calendar date the session was played, `YYYY-MM-DD`.                                                                                                                                       |
+| `player_count` | int               | yes                   | Number of seated players. Must equal `len(players)`.                                                                                                                                      |
+| `winners`      | int[]             | yes                   | 0-based indices into `players[]`. One entry = solo win; multiple = tie or team win (list every teammate who shared the win).                                                              |
+| `notes`        | string            | no                    | Free-form prose for anything the structured fields don't capture — elimination order, score breakdowns, house rules, what broke a tie, best-of-N round tallies, memorable moments.        |
+| `players`      | array             | yes                   | One entry per player, in seating order. Position in array = player index.                                                                                                                 |
 
 ## `players[]` fields
 
-| Field | Type | Required | Captures |
-|---|---|---|---|
-| `name` | string | yes | Player's name/handle. Non-unique is fine — `winners` references by index. |
-| `email` | string (email) | no | Stable identifier for the player across sessions. Used for aggregations / stats over time (same person → same email, even if `name` varies). |
-| `identity` | string | no | Single field covering colour / faction / civ / mat / hidden role — whatever the game uses to distinguish players. Variant schemas may constrain via `enum`. Examples: `"red"` (Catan), `"crimea"` (Scythe), `"liberal"` (Secret Hitler). |
-| `team` | int | no | Team number for team games (e.g. `1` / `2`). Teammates share the value. Omit for free-for-all. |
-| `eliminated` | bool | no | Whether the player was knocked out before the game ended. Omit entirely for games without elimination (Catan, Codenames, etc.); only include when the game has an elimination mechanic (Coup, Risk). |
-| `end_state` | object | yes | Map of everything the player holds at game end: VP, coins, resources, cards, buildings, units, tiles, employees, territories, etc. Keys constrained per variant. Values are integers for counts and booleans for flags (e.g. `longest_road: true`). |
+| Field        | Type           | Required | Captures                                                                                                                                                                                                                                            |
+| ------------ | -------------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`       | string         | yes      | Player's name/handle. Non-unique is fine — `winners` references by index.                                                                                                                                                                           |
+| `email`      | string (email) | no       | Stable identifier for the player across sessions. Used for aggregations / stats over time (same person → same email, even if `name` varies).                                                                                                        |
+| `identity`   | string         | no       | Single field covering colour / faction / civ / mat / hidden role — whatever the game uses to distinguish players. Variant schemas may constrain via `enum`. Examples: `"red"` (Catan), `"crimea"` (Scythe), `"liberal"` (Secret Hitler).            |
+| `team`       | int            | no       | Team number for team games (e.g. `1` / `2`). Teammates share the value. Omit for free-for-all.                                                                                                                                                      |
+| `eliminated` | bool           | no       | Whether the player was knocked out before the game ended. Omit entirely for games without elimination (Catan, Codenames, etc.); only include when the game has an elimination mechanic (Coup, Risk).                                                |
+| `end_state`  | object         | yes      | Map of everything the player holds at game end: VP, coins, resources, cards, buildings, units, tiles, employees, territories, etc. Keys constrained per variant. Values are integers for counts and booleans for flags (e.g. `longest_road: true`). |
 
 There's no separate `score` field. A player's score — when the game has one — is either:
 
@@ -69,18 +69,22 @@ A variant schema constrains `end_state` keys (and optionally `identity` values) 
           "end_state": {
             "propertyNames": {
               "enum": [
-                "settlements", "cities", "roads",
-                "longest_road", "largest_army",
-                "dev_card_vp", "knights_played"
+                "settlements",
+                "cities",
+                "roads",
+                "longest_road",
+                "largest_army",
+                "dev_card_vp",
+                "knights_played"
               ]
             },
             "properties": {
-              "settlements":    { "type": "integer", "minimum": 0 },
-              "cities":         { "type": "integer", "minimum": 0 },
-              "roads":          { "type": "integer", "minimum": 0 },
-              "longest_road":   { "type": "boolean" },
-              "largest_army":   { "type": "boolean" },
-              "dev_card_vp":    { "type": "integer", "minimum": 0 },
+              "settlements": { "type": "integer", "minimum": 0 },
+              "cities": { "type": "integer", "minimum": 0 },
+              "roads": { "type": "integer", "minimum": 0 },
+              "longest_road": { "type": "boolean" },
+              "largest_army": { "type": "boolean" },
+              "dev_card_vp": { "type": "integer", "minimum": 0 },
               "knights_played": { "type": "integer", "minimum": 0 }
             }
           }
@@ -130,24 +134,36 @@ A Catan-style record, with scoring components only (no `vp` — derived from the
       "name": "Alex",
       "identity": "red",
       "end_state": {
-        "settlements": 3, "cities": 1, "roads": 8,
-        "longest_road": false, "largest_army": true, "dev_card_vp": 0
+        "settlements": 3,
+        "cities": 1,
+        "roads": 8,
+        "longest_road": false,
+        "largest_army": true,
+        "dev_card_vp": 0
       }
     },
     {
       "name": "Bea",
       "identity": "blue",
       "end_state": {
-        "settlements": 2, "cities": 3, "roads": 12,
-        "longest_road": true, "largest_army": false, "dev_card_vp": 0
+        "settlements": 2,
+        "cities": 3,
+        "roads": 12,
+        "longest_road": true,
+        "largest_army": false,
+        "dev_card_vp": 0
       }
     },
     {
       "name": "Cam",
       "identity": "white",
       "end_state": {
-        "settlements": 4, "cities": 1, "roads": 7,
-        "longest_road": false, "largest_army": false, "dev_card_vp": 1
+        "settlements": 4,
+        "cities": 1,
+        "roads": 7,
+        "longest_road": false,
+        "largest_army": false,
+        "dev_card_vp": 1
       }
     }
   ]

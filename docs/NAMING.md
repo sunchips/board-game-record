@@ -17,7 +17,7 @@ Slugs stay ASCII because they become filesystem paths, URLs, and grep-targets �
 
 Apply in order to the printed title:
 
-1. **Replace `&` with ` and `** (spelled out).
+1. **Replace `&` with the word `and`, surrounded by spaces** (so `Cities & Knights` → `Cities and Knights` before later steps run).
 2. **Drop apostrophes** (don't turn them into hyphens): `It's` → `its`, not `it-s`.
 3. **Transliterate non-ASCII** to the common Latin title when one exists: `街コロ` → `machi-koro`.
 4. **Replace every other run of non-alphanumeric characters** (spaces, periods, colons, exclamation marks, slashes, dashes) with a single hyphen.
@@ -26,26 +26,26 @@ Apply in order to the printed title:
 
 ### Examples covering the edge cases
 
-| Printed title | Slug | Why |
-|---|---|---|
-| Catan | `catan` | Trivial. |
-| The King Is Dead | `the-king-is-dead` | Spaces → hyphens. |
-| Cities & Knights | `cities-and-knights` | `&` spelled out. |
-| It's a Wonderful World | `its-a-wonderful-world` | Apostrophe dropped. |
-| Sushi Go! | `sushi-go` | `!` dropped. |
-| Clank! In! Space! | `clank-in-space` | Multiple `!` dropped. |
-| St. Petersburg | `st-petersburg` | `. ` collapses to one hyphen. |
-| Dr. Eureka | `dr-eureka` | Same. |
-| Codenames: Deep Undercover | `codenames-deep-undercover` | `: ` collapses to one hyphen. |
-| A Game of Thrones: The Board Game | `a-game-of-thrones-the-board-game` | Long title, same rules. |
-| Magic: The Gathering | `magic-the-gathering` | — |
-| 7 Wonders | `7-wonders` | Digits are fine. |
-| T.I.M.E Stories | `t-i-m-e-stories` | Each letter is its own token because `.` separates them — mechanical rule, no pronunciation guess. |
-| P.I. | `p-i` | Same. |
-| M.U.L.E. | `m-u-l-e` | Same — even though it's pronounced "mule", the dots make each letter a separate token. |
-| D&D | `d-and-d` | `&` → `-and-`. |
-| Machi Koro (街コロ) | `machi-koro` | Transliterate to common Latin title. |
-| HeroQuest | `heroquest` | Cover prints it as one word. |
+| Printed title                     | Slug                               | Why                                                                                                |
+| --------------------------------- | ---------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Catan                             | `catan`                            | Trivial.                                                                                           |
+| The King Is Dead                  | `the-king-is-dead`                 | Spaces → hyphens.                                                                                  |
+| Cities & Knights                  | `cities-and-knights`               | `&` spelled out.                                                                                   |
+| It's a Wonderful World            | `its-a-wonderful-world`            | Apostrophe dropped.                                                                                |
+| Sushi Go!                         | `sushi-go`                         | `!` dropped.                                                                                       |
+| Clank! In! Space!                 | `clank-in-space`                   | Multiple `!` dropped.                                                                              |
+| St. Petersburg                    | `st-petersburg`                    | `. ` collapses to one hyphen.                                                                      |
+| Dr. Eureka                        | `dr-eureka`                        | Same.                                                                                              |
+| Codenames: Deep Undercover        | `codenames-deep-undercover`        | `: ` collapses to one hyphen.                                                                      |
+| A Game of Thrones: The Board Game | `a-game-of-thrones-the-board-game` | Long title, same rules.                                                                            |
+| Magic: The Gathering              | `magic-the-gathering`              | —                                                                                                  |
+| 7 Wonders                         | `7-wonders`                        | Digits are fine.                                                                                   |
+| T.I.M.E Stories                   | `t-i-m-e-stories`                  | Each letter is its own token because `.` separates them — mechanical rule, no pronunciation guess. |
+| P.I.                              | `p-i`                              | Same.                                                                                              |
+| M.U.L.E.                          | `m-u-l-e`                          | Same — even though it's pronounced "mule", the dots make each letter a separate token.             |
+| D&D                               | `d-and-d`                          | `&` → `-and-`.                                                                                     |
+| Machi Koro (街コロ)               | `machi-koro`                       | Transliterate to common Latin title.                                                               |
+| HeroQuest                         | `heroquest`                        | Cover prints it as one word.                                                                       |
 
 The mechanical rule (`.` always separates) is intentional — it avoids per-game judgment calls about how an acronym is pronounced.
 
@@ -111,7 +111,7 @@ A "new edition" can mean many things — a reprint with updated art, a rules rev
 
 ### 1. Cosmetic reprint or minor rule clarification
 
-Same rules, tweaked wording, new art, updated components. E.g. *Catan 4th ed.* → *5th ed.*, *Splendor* core-rules reprint.
+Same rules, tweaked wording, new art, updated components. E.g. _Catan 4th ed._ → _5th ed._, _Splendor_ core-rules reprint.
 
 - No new schema, no new variant.
 - Document the delta in a short "Edition notes" section of the base `<game>.md`.
@@ -119,7 +119,7 @@ Same rules, tweaked wording, new art, updated components. E.g. *Catan 4th ed.* �
 
 ### 2. Meaningfully different rules within the same brand
 
-The game is still sold as the same title, but scoring components, `end_state` keys, player-count bounds, or faction roster change. E.g. *Scythe Modular Board*, *Puerto Rico 2020 Anniversary*, *7 Wonders 2nd ed.*
+The game is still sold as the same title, but scoring components, `end_state` keys, player-count bounds, or faction roster change. E.g. _Scythe Modular Board_, _Puerto Rico 2020 Anniversary_, _7 Wonders 2nd ed._
 
 - **Add a new variant file** in the existing game folder:
   ```
@@ -135,7 +135,7 @@ The game is still sold as the same title, but scoring components, `end_state` ke
 
 ### 3. Standalone game that shares a brand
 
-Different box, different player counts, incompatible rules — really a separate game. E.g. *Codenames Duet*, *Pandemic Legacy: Season 1*, *Dune: Imperium* (vs. older *Dune*).
+Different box, different player counts, incompatible rules — really a separate game. E.g. _Codenames Duet_, _Pandemic Legacy: Season 1_, _Dune: Imperium_ (vs. older _Dune_).
 
 - **Its own top-level folder** with its own slug: `games/codenames-duet/`.
 - Records use `{ "game": "codenames-duet" }` (variant stays `"base"`).
