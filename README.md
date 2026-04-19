@@ -35,10 +35,9 @@ Records are stored in the database, not in this repo. The flow:
 ```bash
 pip install -r tools/requirements.txt
 python tools/validate.py path/to/draft.json [more.json ...]
-python tools/validate.py --show-scores path/to/draft.json
 ```
 
-Exit code is non-zero if any record fails; errors are printed with JSON Pointer paths. `--show-scores` prints each player's derived VP using the variant's `x-score-formula`.
+Prints `PASS` or `FAIL` per input. Failures include JSON Pointer paths to the offending fields. Exit code is 0 only if every input passes.
 
 ## Spec
 

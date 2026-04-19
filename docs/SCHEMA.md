@@ -105,7 +105,7 @@ When the formula is present:
 
 - Records **do not** carry a `vp` (or similar) key — it's reconstructed from components.
 - The variant's rules summary (`<variant>.md`) documents the formula in prose for humans.
-- Tooling (including `tools/validate.py --show-scores`) uses the formula to display derived scores.
+- Downstream tooling (database views, reporting) reads the formula to compute scores on demand.
 
 When a game's scoring isn't expressible as a simple linear sum (Scythe's popularity brackets, Everdell's unique-card tables), the variant **omits** `x-score-formula` and instead adds a dedicated score key like `coins` or `vp` to the `end_state` enum. The rules summary explains how that total was computed.
 

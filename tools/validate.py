@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Validate board-game session records against core + variant JSON Schemas.
+"""Validate a board-game session record against its schemas.
 
 Usage:
     python tools/validate.py path/to/rec.json [more.json ...]
-    python tools/validate.py --show-scores path/to/rec.json
 
-Records live in a database, not in this repo — this tool exists to validate
-drafts before they are ingested. Exits non-zero if any record fails validation.
+Each input file is checked against schema/core.schema.json plus the
+variant schema resolved from its `game` and `variant` fields. Prints
+PASS or FAIL per file; exits 0 only if every input passes.
 """
 
 from __future__ import annotations
@@ -22,7 +22,6 @@ from jsonschema.exceptions import ValidationError
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CORE_SCHEMA_PATH = REPO_ROOT / "schema" / "core.schema.json"
 GAMES_DIR = REPO_ROOT / "games"
-SCORE_FORMULA_KEY = "x-score-formula"
 
 
 def load_json(path: Path) -> dict:
@@ -40,25 +39,11 @@ def format_error(record_path: Path, err: ValidationError) -> str:
     return f"  {record_path}:{pointer}: {err.message}"
 
 
-def compute_score(end_state: dict, formula: dict) -> int:
-    total = 0
-    for key, multiplier in formula.items():
-        value = end_state.get(key, 0)
-        total += int(value) * multiplier
-    return total
-
-
-def validate_record(
-    record_path: Path, core_schema: dict
-) -> tuple[list[str], dict | None, dict | None]:
-    """Validate one record. Returns (errors, record, variant_schema).
-
-    record and variant_schema are None when unrecoverable (parse error or missing schema).
-    """
+def validate_record(record_path: Path, core_schema: dict) -> list[str]:
     try:
         record = load_json(record_path)
     except json.JSONDecodeError as e:
-        return [f"  {record_path}: invalid JSON: {e}"], None, None
+        return [f"  {record_path}: invalid JSON: {e}"]
 
     errors: list[str] = []
 
@@ -68,7 +53,6 @@ def validate_record(
         for e in sorted(core_validator.iter_errors(record), key=lambda e: e.path)
     )
 
-    variant_schema: dict | None = None
     game = record.get("game")
     variant = record.get("variant", "base")
     if isinstance(game, str) and isinstance(variant, str):
@@ -85,7 +69,6 @@ def validate_record(
                 )
             except json.JSONDecodeError as e:
                 errors.append(f"  {variant_path}: invalid JSON: {e}")
-                variant_schema = None
         else:
             errors.append(
                 f"  {record_path}: variant schema not found at {variant_path.relative_to(REPO_ROOT)}"
@@ -106,31 +89,12 @@ def validate_record(
                         f"  {record_path}:/winners/{i}: index {w} out of range (players has {len(players)} entries)"
                     )
 
-    return errors, record, variant_schema
-
-
-def print_derived_scores(record: dict, variant_schema: dict) -> None:
-    formula = variant_schema.get(SCORE_FORMULA_KEY)
-    if not formula:
-        return
-    players = record.get("players") or []
-    if not players:
-        return
-    print("  derived scores:")
-    for i, p in enumerate(players):
-        score = compute_score(p.get("end_state") or {}, formula)
-        name = p.get("name", "?")
-        print(f"    players[{i}] {name}: {score}")
+    return errors
 
 
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("paths", nargs="+", help="Record files to validate.")
-    parser.add_argument(
-        "--show-scores",
-        action="store_true",
-        help="Print scores derived from each variant's x-score-formula.",
-    )
     args = parser.parse_args(argv[1:])
 
     if not CORE_SCHEMA_PATH.exists():
@@ -138,24 +102,18 @@ def main(argv: list[str]) -> int:
         return 2
     core_schema = load_json(CORE_SCHEMA_PATH)
 
-    records = [Path(a).resolve() for a in args.paths]
-
     failed = 0
-    for rec in records:
-        errs, record, variant_schema = validate_record(rec, core_schema)
-        display = rec.relative_to(REPO_ROOT) if rec.is_relative_to(REPO_ROOT) else rec
-        if errs:
+    for path in (Path(a).resolve() for a in args.paths):
+        display = path.relative_to(REPO_ROOT) if path.is_relative_to(REPO_ROOT) else path
+        errors = validate_record(path, core_schema)
+        if errors:
             failed += 1
             print(f"FAIL: {display}")
-            for msg in errs:
+            for msg in errors:
                 print(msg)
-        elif args.show_scores:
-            print(f"OK:   {display}")
-        if args.show_scores and record is not None and variant_schema is not None and not errs:
-            print_derived_scores(record, variant_schema)
+        else:
+            print(f"PASS: {display}")
 
-    valid = len(records) - failed
-    print(f"{valid}/{len(records)} records valid")
     return 0 if failed == 0 else 1
 
 
