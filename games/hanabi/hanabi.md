@@ -30,4 +30,4 @@ Hanabi has no factions or roles. Players sit around the table; there is no ident
 
 ## Scoring
 
-No `x-score-formula` — `score` is authoritative. Since the game is fully cooperative, either everyone in `players` is in `winners` (positive outcome) or nobody is (loss / explosion).
+No `x-score-formula` — `score` is authoritative. Since the game is fully cooperative, either every player index appears in `winners` (positive outcome) or `winners` is empty for a loss / explosion. The current core schema requires `winners.minItems: 1`, so for a 0-point loss list a single representative index (typically `0`) and use `notes` to clarify.
