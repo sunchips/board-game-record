@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Hanabi — Base",
+  "properties": {
+    "players": {
+      "items": {
+        "properties": {
+          "end_state": {
+            "propertyNames": {
+              "enum": [
+                "score",
+                "firework_red",
+                "firework_yellow",
+                "firework_green",
+                "firework_blue",
+                "firework_white",
+                "fuse_tokens_remaining",
+                "hint_tokens_remaining",
+                "perfect_score",
+                "exploded"
+              ]
+            },
+            "properties": {
+              "score": { "type": "integer", "minimum": 0, "maximum": 25 },
+              "firework_red": { "type": "integer", "minimum": 0, "maximum": 5 },
+              "firework_yellow": { "type": "integer", "minimum": 0, "maximum": 5 },
+              "firework_green": { "type": "integer", "minimum": 0, "maximum": 5 },
+              "firework_blue": { "type": "integer", "minimum": 0, "maximum": 5 },
+              "firework_white": { "type": "integer", "minimum": 0, "maximum": 5 },
+              "fuse_tokens_remaining": { "type": "integer", "minimum": 0, "maximum": 3 },
+              "hint_tokens_remaining": { "type": "integer", "minimum": 0, "maximum": 8 },
+              "perfect_score": { "type": "boolean" },
+              "exploded": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

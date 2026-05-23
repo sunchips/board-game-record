@@ -1,0 +1,71 @@
+{
+  "game": "hanabi",
+  "variants": [],
+  "year_published": 2010,
+  "date": "2026-04-12",
+  "player_count": 4,
+  "winners": ["Alex", "Bea", "Cam", "Dana"],
+  "notes": "Threaded the final yellow 5 with one fuse left. Bea's late discard of an unhinted white saved us from locking out the white 4.",
+  "players": [
+    {
+      "name": "Alex",
+      "end_state": {
+        "score": 24,
+        "firework_red": 5,
+        "firework_yellow": 5,
+        "firework_green": 5,
+        "firework_blue": 5,
+        "firework_white": 4,
+        "fuse_tokens_remaining": 1,
+        "hint_tokens_remaining": 2,
+        "perfect_score": false,
+        "exploded": false
+      }
+    },
+    {
+      "name": "Bea",
+      "end_state": {
+        "score": 24,
+        "firework_red": 5,
+        "firework_yellow": 5,
+        "firework_green": 5,
+        "firework_blue": 5,
+        "firework_white": 4,
+        "fuse_tokens_remaining": 1,
+        "hint_tokens_remaining": 2,
+        "perfect_score": false,
+        "exploded": false
+      }
+    },
+    {
+      "name": "Cam",
+      "end_state": {
+        "score": 24,
+        "firework_red": 5,
+        "firework_yellow": 5,
+        "firework_green": 5,
+        "firework_blue": 5,
+        "firework_white": 4,
+        "fuse_tokens_remaining": 1,
+        "hint_tokens_remaining": 2,
+        "perfect_score": false,
+        "exploded": false
+      }
+    },
+    {
+      "name": "Dana",
+      "end_state": {
+        "score": 24,
+        "firework_red": 5,
+        "firework_yellow": 5,
+        "firework_green": 5,
+        "firework_blue": 5,
+        "firework_white": 4,
+        "fuse_tokens_remaining": 1,
+        "hint_tokens_remaining": 2,
+        "perfect_score": false,
+        "exploded": false
+      }
+    }
+  ]
+}
