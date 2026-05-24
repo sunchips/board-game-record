@@ -1,3 +1,5 @@
+<p align="center"><img src="icon.png" width="160" alt="Board Game"></p>
+
 # board-game-record
 
 Schema and rules catalog for recording board game end-states. This repo defines the **contract** — the JSON Schema each record conforms to, per-game variant schemas, and the rules-summary knowledge base — while session records themselves live in a **separate database**, not in this repo.
