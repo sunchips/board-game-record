@@ -38,9 +38,9 @@
     "winners": {
       "type": "array",
       "items": { "type": "integer", "minimum": 0 },
-      "minItems": 1,
+      "minItems": 0,
       "uniqueItems": true,
-      "description": "Indices into players[] of the winner(s). Multiple entries = tie or team win."
+      "description": "Indices into players[] of the winner(s). One entry = solo win; multiple = tie or team win. For cooperative games (e.g. Hanabi) the convention is all-or-nothing: either every player index is listed (team win) or the array is empty (team loss). Never partial."
     },
     "notes": {
       "type": "string",

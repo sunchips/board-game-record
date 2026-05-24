@@ -30,4 +30,22 @@ Hanabi has no factions or roles. Players sit around the table; there is no ident
 
 ## Scoring
 
-No `x-score-formula` — `score` is authoritative. Since the game is fully cooperative, either every player index appears in `winners` (positive outcome) or `winners` is empty for a loss / explosion. The current core schema requires `winners.minItems: 1`, so for a 0-point loss list a single representative index (typically `0`) and use `notes` to clarify.
+No `x-score-formula` — `score` is authoritative. Hanabi is fully cooperative, so `winners` follows the all-or-nothing convention from [SCHEMA.md](../../docs/SCHEMA.md#cooperative-games):
+
+- **Team win** → list every player index, e.g. `"winners": [0, 1, 2, 3]` for a four-player game. The conventional bar is `score == 25`, but a group can choose to call any agreed outcome a "win" (e.g. "we counted 24 as a win") and document the threshold in `notes`.
+- **Team loss** (typically `exploded == true`, or a sub-target score the group considers a loss) → `"winners": []`. The score still lives in `end_state.score` regardless.
+
+Example loss-shape:
+
+```json
+{
+  "game": "hanabi",
+  "date": "2026-05-24",
+  "player_count": 4,
+  "winners": [],
+  "notes": "Third fuse blew on the white 3 — we'd lost track of which white was still in hand.",
+  "players": [
+    { "name": "Alex", "end_state": { "score": 0, "exploded": true, "fuse_tokens_remaining": 0, "firework_red": 4, "firework_yellow": 2, "firework_green": 3, "firework_blue": 4, "firework_white": 2, "hint_tokens_remaining": 4, "perfect_score": false } }
+  ]
+}
+```

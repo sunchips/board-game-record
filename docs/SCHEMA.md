@@ -17,7 +17,7 @@ The validator unions layers 2 and 3 (plus any further listed variants) into a si
 | `year_published` | int               | no             | Original publication year of the game. Pure metadata when the title is unique. Required only when two games share a printed title — it then selects the right edition's folder.    |
 | `date`           | string (ISO date) | yes            | Calendar date the session was played, `YYYY-MM-DD`.                                                                                                                                |
 | `player_count`   | int               | yes            | Number of seated players. Must equal `len(players)`.                                                                                                                               |
-| `winners`        | int[]             | yes            | 0-based indices into `players[]`. One entry = solo win; multiple = tie or team win (list every teammate who shared the win).                                                       |
+| `winners`        | int[]             | yes            | 0-based indices into `players[]`. One entry = solo win; multiple = tie or team win (list every teammate who shared the win). Empty array = nobody won — used for cooperative-game losses (see _Cooperative games_ below). |
 | `notes`          | string            | no             | Free-form prose for anything the structured fields don't capture — elimination order, score breakdowns, house rules, what broke a tie, best-of-N round tallies, memorable moments. |
 | `players`        | array             | yes            | One entry per player, in seating order. Position in array = player index.                                                                                                          |
 
@@ -45,7 +45,16 @@ Games without a score at all (Coup, Secret Hitler, Codenames) declare no formula
 - Every entry in `winners` is a valid index: `0 <= w < len(players)`
 - Every slug in `variants` has a corresponding `<slug>.schema.json` in the resolved game folder
 
-The core schema additionally enforces `winners` is non-empty and has no duplicate entries (`minItems: 1`, `uniqueItems: true`), and `variants` entries are unique.
+The core schema additionally enforces `winners` has no duplicate entries (`uniqueItems: true`) and `variants` entries are unique. `winners` may be empty — see _Cooperative games_ below.
+
+## Cooperative games
+
+In fully cooperative games (Hanabi, Pandemic, Spirit Island, Forbidden Island, …) every player shares the same fate: either everyone wins or nobody does. The schema encodes that as **all-or-nothing**:
+
+- **Team win** → `winners` lists every player index, e.g. `[0, 1, 2, 3]` for a four-player game.
+- **Team loss** → `winners: []`.
+
+`winners` is never partial for a cooperative game. The score (or score-equivalent — fireworks, infections cured, invader points) lives in the per-player `end_state` map, replicated identically across every player since the outcome is shared.
 
 ## Game folder resolution
 
