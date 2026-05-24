@@ -87,6 +87,11 @@
           "type": "object",
           "additionalProperties": { "type": ["integer", "boolean"] },
           "description": "Map of everything the player holds at game end. Values are integers for counts, booleans for flags (e.g. longest_road). Keys and per-key types are constrained by the union of the base schema and any listed variant schemas."
+        },
+        "saved_player_id": {
+          "type": "string",
+          "format": "uuid",
+          "description": "Optional reference to a roster entry on the server. Clients pass it through when adding a player from the saved roster; omit it for ad-hoc names and the server will find-or-create a roster row."
         }
       }
     }
