@@ -10,24 +10,21 @@
       "name": "Alex",
       "identity": "black",
       "end_state": {
-        "recipes_completed": 2,
-        "coins_remaining": 800
+        "recipes_completed": 2
       }
     },
     {
       "name": "Bea",
       "identity": "blue",
       "end_state": {
-        "recipes_completed": 2,
-        "coins_remaining": 1200
+        "recipes_completed": 2
       }
     },
     {
       "name": "Cam",
       "identity": "green",
       "end_state": {
-        "recipes_completed": 3,
-        "coins_remaining": 400
+        "recipes_completed": 3
       }
     }
   ]

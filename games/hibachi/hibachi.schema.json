@@ -11,13 +11,11 @@
           "end_state": {
             "propertyNames": {
               "enum": [
-                "recipes_completed",
-                "coins_remaining"
+                "recipes_completed"
               ]
             },
             "properties": {
-              "recipes_completed": { "type": "integer", "minimum": 0, "maximum": 3 },
-              "coins_remaining": { "type": "integer", "minimum": 0 }
+              "recipes_completed": { "type": "integer", "minimum": 0, "maximum": 3 }
             }
           }
         }
