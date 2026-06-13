@@ -1,0 +1,34 @@
+{
+  "game": "hibachi",
+  "variants": [],
+  "date": "2026-06-10",
+  "player_count": 3,
+  "winners": [2],
+  "notes": "Close race — all three players had two recipes done by round 5.",
+  "players": [
+    {
+      "name": "Alex",
+      "identity": "black",
+      "end_state": {
+        "recipes_completed": 2,
+        "coins_remaining": 800
+      }
+    },
+    {
+      "name": "Bea",
+      "identity": "blue",
+      "end_state": {
+        "recipes_completed": 2,
+        "coins_remaining": 1200
+      }
+    },
+    {
+      "name": "Cam",
+      "identity": "green",
+      "end_state": {
+        "recipes_completed": 3,
+        "coins_remaining": 400
+      }
+    }
+  ]
+}
