@@ -1,0 +1,39 @@
+{
+  "game": "petiquette",
+  "variants": [],
+  "year_published": 2025,
+  "date": "2026-06-13",
+  "player_count": 4,
+  "winners": [2],
+  "notes": "Round 4's line-up (three hatted foxes plus two numbers) split the table — Cam read it as a 'hat' pattern and matched both Alex and Dana, which is where the lead opened up.",
+  "players": [
+    {
+      "name": "Alex",
+      "end_state": {
+        "score": 5,
+        "matches": 3
+      }
+    },
+    {
+      "name": "Bea",
+      "end_state": {
+        "score": 3,
+        "matches": 2
+      }
+    },
+    {
+      "name": "Cam",
+      "end_state": {
+        "score": 8,
+        "matches": 5
+      }
+    },
+    {
+      "name": "Dana",
+      "end_state": {
+        "score": 4,
+        "matches": 3
+      }
+    }
+  ]
+}
