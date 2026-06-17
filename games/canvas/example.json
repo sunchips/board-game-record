@@ -1,0 +1,22 @@
+{
+  "game": "canvas",
+  "variants": [],
+  "date": "2026-06-15",
+  "player_count": 3,
+  "winners": [1],
+  "notes": "Bea swept the Repetition ribbon across all three paintings.",
+  "players": [
+    {
+      "name": "Alex",
+      "end_state": { "score": 18, "ribbons": 5, "paintings": 3 }
+    },
+    {
+      "name": "Bea",
+      "end_state": { "score": 27, "ribbons": 8, "paintings": 3 }
+    },
+    {
+      "name": "Cam",
+      "end_state": { "score": 22, "ribbons": 6, "paintings": 3 }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Canvas — Base",
+  "properties": {
+    "players": {
+      "items": {
+        "properties": {
+          "end_state": {
+            "propertyNames": {
+              "enum": [
+                "score",
+                "ribbons",
+                "paintings"
+              ]
+            },
+            "properties": {
+              "score": { "type": "integer", "minimum": 0 },
+              "ribbons": { "type": "integer", "minimum": 0 },
+              "paintings": { "type": "integer", "minimum": 0, "maximum": 3 }
+            }
+          }
+        }
+      }
+    }
+  }
+}
