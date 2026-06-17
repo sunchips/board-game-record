@@ -8,15 +8,94 @@
   "players": [
     {
       "name": "Alex",
-      "end_state": { "score": 18, "ribbons": 5, "paintings": 3 }
+      "end_state": {
+        "score": 18,
+        "ribbons": 5,
+        "silver_ribbons": 4,
+        "paintings": 3,
+        "painting_1_scored": true,
+        "painting_1_ribbons": 2,
+        "painting_1_silver": 1,
+        "painting_1_hue": 2,
+        "painting_1_tone": 1,
+        "painting_1_texture": 3,
+        "painting_1_shape": 0,
+        "painting_2_scored": true,
+        "painting_2_ribbons": 1,
+        "painting_2_silver": 2,
+        "painting_2_hue": 1,
+        "painting_2_tone": 2,
+        "painting_2_texture": 1,
+        "painting_2_shape": 1,
+        "painting_3_scored": true,
+        "painting_3_ribbons": 2,
+        "painting_3_silver": 1,
+        "painting_3_hue": 0,
+        "painting_3_tone": 3,
+        "painting_3_texture": 1,
+        "painting_3_shape": 2
+      }
     },
     {
       "name": "Bea",
-      "end_state": { "score": 27, "ribbons": 8, "paintings": 3 }
+      "end_state": {
+        "score": 27,
+        "ribbons": 8,
+        "silver_ribbons": 2,
+        "paintings": 3,
+        "painting_1_scored": true,
+        "painting_1_ribbons": 3,
+        "painting_1_silver": 0,
+        "painting_1_hue": 1,
+        "painting_1_tone": 2,
+        "painting_1_texture": 2,
+        "painting_1_shape": 1,
+        "painting_2_scored": true,
+        "painting_2_ribbons": 3,
+        "painting_2_silver": 1,
+        "painting_2_hue": 3,
+        "painting_2_tone": 1,
+        "painting_2_texture": 0,
+        "painting_2_shape": 2,
+        "painting_3_scored": true,
+        "painting_3_ribbons": 2,
+        "painting_3_silver": 1,
+        "painting_3_hue": 2,
+        "painting_3_tone": 0,
+        "painting_3_texture": 3,
+        "painting_3_shape": 1,
+        "ach_all_conditions": true
+      }
     },
     {
       "name": "Cam",
-      "end_state": { "score": 22, "ribbons": 6, "paintings": 3 }
+      "end_state": {
+        "score": 22,
+        "ribbons": 6,
+        "silver_ribbons": 3,
+        "paintings": 3,
+        "painting_1_scored": true,
+        "painting_1_ribbons": 2,
+        "painting_1_silver": 1,
+        "painting_1_hue": 1,
+        "painting_1_tone": 1,
+        "painting_1_texture": 2,
+        "painting_1_shape": 2,
+        "painting_2_scored": true,
+        "painting_2_ribbons": 2,
+        "painting_2_silver": 1,
+        "painting_2_hue": 2,
+        "painting_2_tone": 2,
+        "painting_2_texture": 1,
+        "painting_2_shape": 0,
+        "painting_3_scored": true,
+        "painting_3_ribbons": 2,
+        "painting_3_silver": 1,
+        "painting_3_hue": 0,
+        "painting_3_tone": 1,
+        "painting_3_texture": 2,
+        "painting_3_shape": 3
+      }
     }
   ]
 }
