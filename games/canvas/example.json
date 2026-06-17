@@ -1,6 +1,6 @@
 {
   "game": "canvas",
-  "variants": [],
+  "variants": ["emphasis", "hierarchy", "proximity", "variety"],
   "date": "2026-06-15",
   "player_count": 3,
   "winners": [1],
